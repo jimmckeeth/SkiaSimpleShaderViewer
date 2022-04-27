@@ -1,5 +1,5 @@
 # Overview
-<sub>[[Source](https://github.com/google/skia/blob/main/src/sksl/README)] [[Official Docs](https://skia.org/docs/user/sksl/)]</sub>
+<sub>[[Source](https://github.com/google/skia/blob/main/src/sksl/README)] [[Official Docs](https://skia.org/docs/user/sksl/)] [[Book of Shaders](https://thebookofshaders.com/)] [[Intro to Shader Programming](https://blog.grijjy.com/2021/01/14/shader-programming/)] [[Skia Shader Playground](https://shaders.skia.org/)] [[GLSL Shadertoy](https://www.shadertoy.com/)]</sub>
 
 SkSL ("Skia Shading Language") is a variant of GLSL which is used as Skia's
 internal shading language. SkSL is, at its heart, a single standardized version
