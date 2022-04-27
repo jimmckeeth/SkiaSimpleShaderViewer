@@ -98,6 +98,7 @@ begin
     Memo1.Lines.LoadFromFile(OpenDialog1.FileName);
     Memo1.Lines.Text := Memo1.Lines.Text.Replace(#9, #32);
     RunShader;
+    MultiView1.HideMaster;
   end;
 end;
 

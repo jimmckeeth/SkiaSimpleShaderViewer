@@ -7,7 +7,6 @@ object Form14: TForm14
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  FullScreen = True
   OnCreate = FormCreate
   DesignerMasterStyle = 0
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox

@@ -169,4 +169,4 @@ vec4 main( in vec2 fragCoord )
 	vec3 I = in_scatter( eye, dir, e, l );
 	
 	return(vec4( pow( I, vec3( 1.0 / 2.2 ) ), 1.0 ));
-}}
+}
