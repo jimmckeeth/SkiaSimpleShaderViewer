@@ -3,4 +3,7 @@ A simple [Skia Shader Language (SkSL)](https://skia.org/docs/user/sksl/) viewer 
 
 Includes a selection of [Shaders](/shaders/) I adapted from [ShaderToy](https://www.shadertoy.com/) by [translating from GLSL to SkSL](SkSL-Overview.md), crediting the original sources.
 
+I've included some [screenshots](screenshots/readme.md) of the different shaders.
+[<img src="screenshots/SimpleShader_seascape.png" width="640">](screenshots/readme.md)
+
 Build [Delphi 11.1 Alexandria](https://www.embarcadero.com/products/delphi) and [Skia4Delphi 3.4](https://github.com/skia4delphi/skia4delphi)
