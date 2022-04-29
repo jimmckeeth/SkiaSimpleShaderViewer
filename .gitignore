@@ -71,3 +71,5 @@ modules/
 bin/
 dcu/
 src/AndroidManifest.template.xml
+
+*.res
