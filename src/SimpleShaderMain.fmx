@@ -2,8 +2,9 @@ object Form14: TForm14
   Left = 0
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
-  ClientHeight = 480
-  ClientWidth = 640
+  ClientHeight = 496
+  ClientWidth = 634
+  Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -12,12 +13,23 @@ object Form14: TForm14
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
     HitTest = True
-    Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Width = 634.000000000000000000
+    Size.Height = 496.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
     Duration = 100000.000000000000000000
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
+    object SpeedButton3: TSpeedButton
+      Anchors = [akTop, akRight]
+      Position.X = 586.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 40.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'escapetoolbutton'
+      Text = 'SpeedButton3'
+      OnClick = SpeedButton3Click
+    end
   end
   object SpeedButton1: TSpeedButton
     Position.X = 8.000000000000000000
@@ -31,8 +43,104 @@ object Form14: TForm14
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sksl'
     Filter = 'Skia Shader Language (*.SkSL)|*.sksl|All|*.*'
-    Left = 368
-    Top = 56
+    Left = 112
+    Top = 72
+  end
+  object SkSvg1: TSkSvg
+    Anchors = [akRight, akBottom]
+    Position.X = 410.000000000000000000
+    Position.Y = 384.000000000000000000
+    Size.Width = 216.000000000000000000
+    Size.Height = 104.000000000000000000
+    Size.PlatformDefault = False
+    Svg.Source = 
+      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.' +
+      'w3.org/1999/xlink" viewBox="0 0 876.38 427.14"><defs><linearGrad' +
+      'ient id="a" x1="7.39" y1="223.15" x2="883.77" y2="223.15" gradie' +
+      'ntUnits="userSpaceOnUse"><stop offset="0" stop-color="#f37133"/>' +
+      '<stop offset="0.18" stop-color="#f06035"/><stop offset="0.44" st' +
+      'op-color="#ec4d38"/><stop offset="0.71" stop-color="#ea4239"/><s' +
+      'top offset="1" stop-color="#e93e3a"/></linearGradient></defs><pa' +
+      'th d="M193.61,223.21q0,39.27-27.94,61.89-27.75,22.61-77.38,22.61' +
+      '-45.72,0-80.9-17.46V233.12q28.92,13.09,48.85,18.45,20.13,5.35,36' +
+      '.74,5.36,19.93,0,30.48-7.74,10.74-7.74,10.75-23a25.17,25.17,0,0,' +
+      '0-4.69-15.07q-4.7-6.75-13.87-12.89-9-6.15-36.93-19.64-26.19-12.5' +
+      '-39.28-24A89.9,89.9,0,0,1,18.53,127.8q-7.82-15.27-7.82-35.7,0-38' +
+      '.47,25.6-60.5,25.78-22,71.12-22a164.26,164.26,0,0,1,42.4,5.36A28' +
+      '8.45,288.45,0,0,1,192.23,30l-19.54,47.8q-22.86-9.53-37.91-13.29a' +
+      '118.94,118.94,0,0,0-29.31-3.77q-17.19,0-26.38,8.13T69.91,90.1a27' +
+      '.13,27.13,0,0,0,3.71,14.28q3.72,6,11.72,11.7,8.2,5.55,38.49,20.2' +
+      '3,40.05,19.44,54.91,39.08Q193.62,194.85,193.61,223.21Zm281.57,80' +
+      '.53H406.39L333.73,184.6,306,216.17v87.57H245.39v-290H306V142.46L' +
+      '407.18,13.75h67.21L374.74,142.08,357.42,163.3l22.93-12Zm35.95-29' +
+      '0v290H571.7v-290Zm307.36,290-20.71-69H693.63l-20.71,69H607.66L70' +
+      '8.49,12.56h74.06L883.77,303.74Zm-35.17-120.6Q754.59,89.32,750.88' +
+      ',77q-3.51-12.3-5.08-19.44Q739.35,83,708.87,183.14ZM69.42,410.92h' +
+      '12.2V387.11h19.84V376.68H81.62V361.14H103V350.67H69.42Zm122.64-3' +
+      '0.21q0,15-7.2,23t-20.65,8q-13.44,0-20.65-8t-7.2-23.08q0-15,7.2-2' +
+      '3t20.73-7.95q13.49,0,20.61,8T192.06,380.71Zm-42.69,0q0,10.1,3.72' +
+      ',15.21T164.21,401q14.85,0,14.84-20.32t-14.76-20.36c-4.93,0-8.66,' +
+      '1.72-11.16,5.15S149.37,374,149.37,380.71Zm95.8-3.29h-4V361.14h3.' +
+      '76q6,0,8.84,1.81t2.88,6.1c0,2.89-.93,5-2.8,6.35S249.09,377.42,24' +
+      '5.17,377.42Zm-4,33.5V387.8h6.6l14,23.12h13.76q-4-5.93-17.2-26.25' +
+      'a18.92,18.92,0,0,0,8-6.47,16.47,16.47,0,0,0,2.84-9.48q0-9.11-5.7' +
+      '2-13.56t-17.64-4.49h-17v60.25Zm235.69-30.78q0,15.32-8,23.46t-23.' +
+      '12,8.15H429.57v-62h17.9q13.95,0,21.68,8T476.86,380.14Zm-12.55.34' +
+      'q0-20-16.22-20h-6.44v40.39h5.19Q464.3,400.89,464.31,380.48Zm48.3' +
+      '2,31.27h32.83V400.9H524.72v-16H544V374.12h-19.3V360.5h20.74V349.' +
+      '72H512.63Zm68.72,0v-62h12.09v51.17h23.12v10.86Zm85.17-32.84h-4V3' +
+      '60.5H668c3.3,0,5.71.74,7.25,2.21s2.34,3.75,2.34,6.83-.92,5.39-2.' +
+      '77,7S670.24,378.91,666.52,378.91Zm17.54,5.48q5.78-5.31,5.77-15.3' +
+      '2,0-9.63-5.42-14.47t-15.75-4.88H650.45v62h12.09V389.69h5.19Q678.' +
+      '33,389.69,684.06,384.39Zm87.2,27.36h-12V385H736.63v26.77H724.54v' +
+      '-62h12.09V374h22.58V349.72h12Zm38.39-62v62h12.09v-62Zm-493,51.63' +
+      'a3.58,3.58,0,0,0,3.95-4,42.3,42.3,0,0,1-.27-8,35.26,35.26,0,0,1,' +
+      '54.59-25.49,2.78,2.78,0,0,0,3.2-.08l12.73-9.39a2.13,2.13,0,0,0,0' +
+      '-3.41,49.4,49.4,0,0,0-78.92,39.61,49.83,49.83,0,0,0,.83,9,1.77,1' +
+      '.77,0,0,0,1.57,1.43ZM309.68,398a1.33,1.33,0,0,1-1.25,1.54,1.75,1' +
+      '.75,0,0,1-1.78-1.35,54.28,54.28,0,0,1,88.88-51.58,2.89,2.89,0,0,' +
+      '1,.09,4.25,1.37,1.37,0,0,1-1.84.05A51.5,51.5,0,0,0,309.68,398Zm4' +
+      '4.13-8.69c.31,0,16.92,2.36,21.78,4.18,4.33,1.63,6.25,5.52,7.33,7' +
+      '.72.13.27.25.5.36.71.46.89,1.36,3.21,2.26,5.53h0c.34.88.68,1.75,' +
+      '1,2.55a11,11,0,0,0,4.89,6.66c-1.39-5.08-4.85-17.25-6.89-19.87a22' +
+      '.79,22.79,0,0,0-5.38-5.26l-.28-.2c-1.27-.92-21.63-4.16-24.74-4.5' +
+      '1a5.32,5.32,0,0,0-3.73,1.15,3.84,3.84,0,0,0-1.48,2.6c-.28,2.74.1' +
+      '3,4,1.82,5.66,1.23,1.19,7,2.77,10.17,3.62,1.21.33,2.09.57,2.5.72' +
+      's1.24.31,2.27.52h0c3.26.66,8.15,1.65,9.79,3.56,1.86,2.18,10,25.2' +
+      '5,9.32,26.54-.15.3-.4.8-7.9,1.7-1,.12-5.29.63-7.14.63a2.28,2.28,' +
+      '0,0,1-.8-.08c-.35-.18-1-1.06-3.44-4.77-2.06-3.1-4.63-6.95-6.38-9' +
+      '.06a31.78,31.78,0,0,0-12.32-8.75c-4.21-1.47-10.82-2.68-15.3-2.15' +
+      'a42.59,42.59,0,0,0-4.46.76c.36.88.75,1.75,1.19,2.59q1.7-.15,3.42' +
+      '-.15c13.37,0,24.94,6.95,30.56,17.08,1.6,2.33,3.55,5,4.7,6.51a3,3' +
+      ',0,0,0,2.61,1.18l17.32-1.42a1.9,1.9,0,0,0,1.68-2.42l-.06-.18c-1.' +
+      '32-4.6-4.15-14.4-5-17.17a47.77,47.77,0,0,0-4.35-11.63c-2-3.46-8-' +
+      '4.88-14.23-6.37-4.21-1-8.53-2-11.85-3.71a2.37,2.37,0,0,1-.61-.32' +
+      ',2.31,2.31,0,0,1,1.36-4.16Zm35.4,7.87c.33,1.68,4.4,15.53,5.63,19' +
+      '.7a.72.72,0,0,1-.9.9,11.08,11.08,0,0,1-1.31-.49c-1.19-4.41-5-18.' +
+      '16-7.32-21.13a23.5,23.5,0,0,0-5.58-5.46l-.28-.2c-1.67-1.21-23.52' +
+      '-4.5-25.21-4.69a6.36,6.36,0,0,0-4.47,1.37,4.77,4.77,0,0,0-1.84,3' +
+      '.27c-.32,3,.2,4.61,2.12,6.48,1.3,1.27,5.95,2.61,10.6,3.87,1.15.3' +
+      '1,2.05.56,2.42.69a20.53,20.53,0,0,0,2.41.56c2.93.59,7.84,1.58,9.' +
+      '26,3.24,2,2.33,8.82,23,9.14,25.4-1.63.67-13,2-14.45,1.82-.38-.4-' +
+      '1.74-2.44-3.05-4.41-2.07-3.12-4.66-7-6.44-9.15a32.89,32.89,0,0,0' +
+      '-12.76-9.05c-4.33-1.52-11.12-2.76-15.75-2.2a41.29,41.29,0,0,0-4.' +
+      '72.81,32.28,32.28,0,0,1,30.21-43.68,31.06,31.06,0,0,1,18.15,5.75' +
+      'C384.12,377.48,387.64,389.33,389.21,397.2Z" transform="translate' +
+      '(-7.39 -9.58)" fill-rule="evenodd" fill="url(#a)"/></svg>'
+    object FloatAnimation1: TFloatAnimation
+      Delay = 2.000000000000000000
+      Duration = 1.000000000000000000
+      PropertyName = 'Opacity'
+      StartValue = 1.000000000000000000
+      StopValue = 0.000000000000000000
+    end
+    object ShadowEffect1: TShadowEffect
+      Distance = 3.000000000000000000
+      Direction = 45.000000000000000000
+      Softness = 0.300000011920929000
+      Opacity = 0.600000023841857900
+      ShadowColor = claBlack
+    end
   end
   object MultiView1: TMultiView
     MasterButton = SpeedButton1
@@ -49,230 +157,274 @@ object Form14: TForm14
         'uniform float2 iResolution;'
         'uniform float4 iMouse;'
         ''
-        '/*'
-        ' * "Seascape" by Alexander Alekseev aka TDM - 2014'
+        '// Original: https://www.shadertoy.com/view/MlKSWm'
+        '//'
+        '// Description : Array and textureless GLSL 2D/3D/4D simplex '
+        '//        noise functions.'
+        '//   Author : Ian McEwan, Ashima Arts.'
+        '// Maintainer : ijm'
+        '//   Lastmod : 20110822 (ijm)'
         
-          ' * License Creative Commons Attribution-NonCommercial-ShareAlike' +
-          ' 3.0 Unported License.'
-        ' * Contact: tdmaav@gmail.com'
-        ' * https://www.shadertoy.com/view/Ms2SD1'
-        ' */'
+          '//   License : Copyright (C) 2011 Ashima Arts. All rights reserv' +
+          'ed.'
+        '//        Distributed under the MIT License. See LICENSE file.'
+        '//        https://github.com/ashima/webgl-noise'
+        '// '
         ''
-        'const int NUM_STEPS = 8;'
-        'const float PI = 3.141592;'
-        'const float EPSILON = 1e-3;'
-        'float EPSILON_NRM() {'
-        '  return 0.1 / iResolution.x;'
-        '}'
-        '// sea'
-        'const int ITER_GEOMETRY = 3;'
-        'const int ITER_FRAGMENT = 5;'
-        'const float SEA_HEIGHT = 0.6;'
-        'const float SEA_CHOPPY = 4.0;'
-        'const float SEA_SPEED = 0.8;'
-        'const float SEA_FREQ = 0.16;'
-        'const vec3 SEA_BASE = vec3(0.0, 0.09, 0.18);'
-        'const vec3 SEA_WATER_COLOR = vec3(0.8, 0.9, 0.6) * 0.6;'
-        'const mat2 octave_m = mat2(1.6, 1.2, -1.2, 1.6);'
-        ''
-        'float SEA_TIME() {'
-        '  return (1.0 + iTime * SEA_SPEED);'
+        'vec3 mod289(vec3 x) {'
+        ' return x - floor(x * (1.0 / 289.0)) * 289.0;'
         '}'
         ''
-        '// math'
-        'mat3 fromEuler(vec3 ang) {'
-        '  vec2 a1 = vec2(sin(ang.x), cos(ang.x));'
-        '  vec2 a2 = vec2(sin(ang.y), cos(ang.y));'
-        '  vec2 a3 = vec2(sin(ang.z), cos(ang.z));'
-        '  mat3 m;'
+        'vec4 mod289(vec4 x) {'
+        ' return x - floor(x * (1.0 / 289.0)) * 289.0;'
+        '}'
+        ''
+        'vec4 permute(vec4 x) {'
+        '   return mod289(((x*34.0)+1.0)*x);'
+        '}'
+        ''
+        'vec4 taylorInvSqrt(vec4 r)'
+        '{'
+        ' return 1.79284291400159 - 0.85373472095314 * r;'
+        '}'
+        ''
+        'float snoise(vec3 v)'
+        ' { '
+        ' const vec2 C = vec2(1.0/6.0, 1.0/3.0) ;'
+        ' const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);'
+        ''
+        '// First corner'
+        ' vec3 i = floor(v + dot(v, C.yyy) );'
+        ' vec3 x0 =  v - i + dot(i, C.xxx) ;'
+        ''
+        '// Other corners'
+        ' vec3 g = step(x0.yzx, x0.xyz);'
+        ' vec3 l = 1.0 - g;'
+        ' vec3 i1 = min( g.xyz, l.zxy );'
+        ' vec3 i2 = max( g.xyz, l.zxy );'
+        ''
+        ' //  x0 = x0 - 0.0 + 0.0 * C.xxx;'
+        ' //  x1 = x0 - i1 + 1.0 * C.xxx;'
+        ' //  x2 = x0 - i2 + 2.0 * C.xxx;'
+        ' //  x3 = x0 - 1.0 + 3.0 * C.xxx;'
+        ' vec3 x1 = x0 - i1 + C.xxx;'
+        ' vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y'
+        ' vec3 x3 = x0 - D.yyy;   // -1.0+3.0*C.x = -0.5 = -D.y'
+        ''
+        '// Permutations'
+        ' i = mod289(i); '
+        ' vec4 p = permute( permute( permute( '
+        '       i.z + vec4(0.0, i1.z, i2.z, 1.0 ))'
+        '      + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) '
+        '      + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));'
+        ''
         
-          '  m[0] = vec3(a1.y * a3.y + a1.x * a2.x * a3.x, a1.y * a2.x * a3' +
-          '.x + a3.y * a1.x, -a2.y * a3.x);'
-        '  m[1] = vec3(-a2.y * a1.x, a1.y * a2.y, a2.x);'
+          '// Gradients: 7x7 points over a square, mapped onto an octahedro' +
+          'n.'
         
-          '  m[2] = vec3(a3.y * a1.x * a2.x + a1.y * a3.x, a1.x * a3.x - a1' +
-          '.y * a3.y * a2.x, a2.y * a3.y);'
-        '  return m;'
-        '}'
-        'float hash(vec2 p) {'
-        '  float h = dot(p, vec2(127.1, 311.7));'
-        '  return fract(sin(h) * 43758.5453123);'
-        '}'
-        'float noise( in vec2 p) {'
-        '  vec2 i = floor(p);'
-        '  vec2 f = fract(p);'
-        '  vec2 u = f * f * (3.0 - 2.0 * f);'
-        '  return -1.0 + 2.0 * mix(mix(hash(i + vec2(0.0, 0.0)),'
-        '      hash(i + vec2(1.0, 0.0)), u.x),'
-        '    mix(hash(i + vec2(0.0, 1.0)),'
-        '      hash(i + vec2(1.0, 1.0)), u.x), u.y);'
-        '}'
+          '// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 ' +
+          '= 294)'
+        ' float n_ = 0.142857142857; // 1.0/7.0'
+        ' vec3 ns = n_ * D.wyz - D.xzx;'
         ''
-        '// lighting'
-        'float diffuse(vec3 n, vec3 l, float p) {'
-        '  return pow(dot(n, l) * 0.4 + 0.6, p);'
-        '}'
-        'float specular(vec3 n, vec3 l, vec3 e, float s) {'
-        '  float nrm = (s + 8.0) / (PI * 8.0);'
-        '  return pow(max(dot(reflect(e, n), l), 0.0), s) * nrm;'
-        '}'
+        ' vec4 j = p - 49.0 * floor(p * ns.z * ns.z); // mod(p,7*7)'
         ''
-        '// sky'
-        'vec3 getSkyColor(vec3 e) {'
-        '  e.y = (max(e.y, 0.0) * 0.8 + 0.2) * 0.8;'
+        ' vec4 x_ = floor(j * ns.z);'
+        ' vec4 y_ = floor(j - 7.0 * x_ );  // mod(j,N)'
+        ''
+        ' vec4 x = x_ *ns.x + ns.yyyy;'
+        ' vec4 y = y_ *ns.x + ns.yyyy;'
+        ' vec4 h = 1.0 - abs(x) - abs(y);'
+        ''
+        ' vec4 b0 = vec4( x.xy, y.xy );'
+        ' vec4 b1 = vec4( x.zw, y.zw );'
+        ''
+        ' //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;'
+        ' //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;'
+        ' vec4 s0 = floor(b0)*2.0 + 1.0;'
+        ' vec4 s1 = floor(b1)*2.0 + 1.0;'
+        ' vec4 sh = -step(h, vec4(0.0));'
+        ''
+        ' vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;'
+        ' vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;'
+        ''
+        ' vec3 p0 = vec3(a0.xy,h.x);'
+        ' vec3 p1 = vec3(a0.zw,h.y);'
+        ' vec3 p2 = vec3(a1.xy,h.z);'
+        ' vec3 p3 = vec3(a1.zw,h.w);'
+        ''
+        '//Normalise gradients'
         
-          '  return vec3(pow(1.0 - e.y, 2.0), 1.0 - e.y, 0.6 + (1.0 - e.y) ' +
-          '* 0.4) * 1.1;'
-        '}'
-        ''
-        '// sea'
-        'float sea_octave(vec2 uv, float choppy) {'
-        '  uv += noise(uv);'
-        '  vec2 wv = 1.0 - abs(sin(uv));'
-        '  vec2 swv = abs(cos(uv));'
-        '  wv = mix(wv, swv, wv);'
-        '  return pow(1.0 - pow(wv.x * wv.y, 0.65), choppy);'
-        '}'
-        ''
-        'float map(vec3 p) {'
-        '  float freq = SEA_FREQ;'
-        '  float amp = SEA_HEIGHT;'
-        '  float choppy = SEA_CHOPPY;'
-        '  vec2 uv = p.xz;'
-        '  uv.x *= 0.75;'
-        ''
-        '  float d, h = 0.0;'
-        '  for (int i = 0; i < ITER_GEOMETRY; i++) {'
-        '    d = sea_octave((uv + SEA_TIME()) * freq, choppy);'
-        '    d += sea_octave((uv - SEA_TIME()) * freq, choppy);'
-        '    h += d * amp;'
-        '    uv *= octave_m;'
-        '    freq *= 1.9;'
-        '    amp *= 0.22;'
-        '    choppy = mix(choppy, 1.0, 0.2);'
-        '  }'
-        '  return p.y - h;'
-        '}'
-        ''
-        'float map_detailed(vec3 p) {'
-        '  float freq = SEA_FREQ;'
-        '  float amp = SEA_HEIGHT;'
-        '  float choppy = SEA_CHOPPY;'
-        '  vec2 uv = p.xz;'
-        '  uv.x *= 0.75;'
-        ''
-        '  float d, h = 0.0;'
-        '  for (int i = 0; i < ITER_FRAGMENT; i++) {'
-        '    d = sea_octave((uv + SEA_TIME()) * freq, choppy);'
-        '    d += sea_octave((uv - SEA_TIME()) * freq, choppy);'
-        '    h += d * amp;'
-        '    uv *= octave_m;'
-        '    freq *= 1.9;'
-        '    amp *= 0.22;'
-        '    choppy = mix(choppy, 1.0, 0.2);'
-        '  }'
-        '  return p.y - h;'
-        '}'
-        ''
-        'vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {'
-        '  float fresnel = clamp(1.0 - dot(n, -eye), 0.0, 1.0);'
-        '  fresnel = pow(fresnel, 3.0) * 0.5;'
-        ''
-        '  vec3 reflected = getSkyColor(reflect(eye, n));'
+          ' //vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2' +
+          ', p2), dot(p3,p3)));'
         
-          '  vec3 refracted = SEA_BASE + diffuse(n, l, 80.0) * SEA_WATER_CO' +
-          'LOR * 0.12;'
+          ' vec4 norm = inversesqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2' +
+          '), dot(p3,p3)));'
+        ' p0 *= norm.x;'
+        ' p1 *= norm.y;'
+        ' p2 *= norm.z;'
+        ' p3 *= norm.w;'
         ''
-        '  vec3 color = mix(refracted, reflected, fresnel);'
-        ''
-        '  float atten = max(1.0 - dot(dist, dist) * 0.001, 0.0);'
-        '  color += SEA_WATER_COLOR * (p.y - SEA_HEIGHT) * 0.18 * atten;'
-        ''
-        '  color += vec3(specular(n, l, eye, 60.0));'
-        ''
-        '  return color;'
-        '}'
-        ''
-        '// tracing'
-        'vec3 getNormal(vec3 p, float eps) {'
-        '  vec3 n;'
-        '  n.y = map_detailed(p);'
-        '  n.x = map_detailed(vec3(p.x + eps, p.y, p.z)) - n.y;'
-        '  n.z = map_detailed(vec3(p.x, p.y, p.z + eps)) - n.y;'
-        '  n.y = eps;'
-        '  return normalize(n);'
-        '}'
-        ''
-        'float heightMapTracing(vec3 ori, vec3 dir, out vec3 p) {'
-        '  float tm = 0.0;'
-        '  float tx = 1000.0;'
-        '  float hx = map(ori + dir * tx);'
-        '  if (hx > 0.0) {'
-        '    p = ori + dir * tx;'
-        '    return tx;'
-        '  }'
-        '  float hm = map(ori + dir * tm);'
-        '  float tmid = 0.0;'
-        '  for (int i = 0; i < NUM_STEPS; i++) {'
-        '    tmid = mix(tm, tx, hm / (hm - hx));'
-        '    p = ori + dir * tmid;'
-        '    float hmid = map(p);'
-        '    if (hmid < 0.0) {'
-        '      tx = tmid;'
-        '      hx = hmid;'
-        '    } else {'
-        '      tm = tmid;'
-        '      hm = hmid;'
-        '    }'
-        '  }'
-        '  return tmid;'
-        '}'
-        ''
-        'vec3 getPixel( in vec2 coord, float time) {'
-        '  vec2 uv = coord / iResolution.xy;'
-        '  uv = uv * 2.0 - 1.0;'
-        '  uv.x *= iResolution.x / iResolution.y;'
-        ''
-        '  // ray'
+        '// Mix final noise value'
         
-          '  vec3 ang = vec3(sin(time * 3.0) * 0.1, sin(time) * 0.2 + 0.3, ' +
-          'time);'
-        '  vec3 ori = vec3(0.0, 3.5, time * 5.0);'
-        '  vec3 dir = normalize(vec3(uv.xy, -2.0));'
-        '  dir.z += length(uv) * 0.14;'
-        '  dir = normalize(dir) * fromEuler(ang);'
+          ' vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot' +
+          '(x3,x3)), 0.0);'
+        ' m = m * m;'
+        ' return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), '
+        '                dot(p2,x2), dot(p3,x3) ) );'
+        ' }'
         ''
-        '  // tracing'
-        '  vec3 p;'
-        '  heightMapTracing(ori, dir, p);'
-        '  vec3 dist = p - ori;'
-        '  vec3 n = getNormal(p, dot(dist, dist) * EPSILON_NRM());'
-        '  vec3 light = normalize(vec3(0.0, 1.0, 0.8));'
+        '//////////////////////////////////////////////////////////////'
         ''
-        '  // color'
-        '  return mix('
-        '    getSkyColor(dir),'
-        '    getSeaColor(p, n, light, dir, dist),'
-        '    pow(smoothstep(0.0, -0.02, dir.y), 0.2));'
+        '// PRNG'
+        '// From https://www.shadertoy.com/view/4djSRW'
+        'float prng(in vec2 seed) {'
+        ' seed = fract (seed * vec2 (5.3983, 5.4427));'
+        ' seed += dot (seed.yx, seed.xy + vec2 (21.5351, 14.3137));'
+        ' return fract (seed.x * seed.y * 95.4337);'
         '}'
         ''
-        '// main'
-        'vec4 main(vec2 fragCoord) {'
-        '  fragCoord.y = iResolution.y - fragCoord.y;'
-        '  fragCoord.x = iResolution.x - fragCoord.x;'
-        '  float time = iTime * 0.3 + iMouse.x * 0.01;'
+        '//////////////////////////////////////////////////////////////'
         ''
-        '  vec3 color = getPixel(fragCoord, time);'
-        '  // post'
-        '  return (vec4(pow(color, vec3(0.65)), 1.0));'
+        'float PI = 3.1415926535897932384626433832795;'
+        ''
+        'float noiseStack(vec3 pos,int octaves,float falloff){'
+        ' float noise = snoise(vec3(pos));'
+        ' float off = 1.0;'
+        ' if (octaves>1) {'
+        '  pos *= 2.0;'
+        '  off *= falloff;'
+        '  noise = (1.0-off)*noise + off*snoise(vec3(pos));'
+        ' }'
+        ' if (octaves>2) {'
+        '  pos *= 2.0;'
+        '  off *= falloff;'
+        '  noise = (1.0-off)*noise + off*snoise(vec3(pos));'
+        ' }'
+        ' if (octaves>3) {'
+        '  pos *= 2.0;'
+        '  off *= falloff;'
+        '  noise = (1.0-off)*noise + off*snoise(vec3(pos));'
+        ' }'
+        ' return (1.0+noise)/2.0;'
+        '}'
+        ''
+        
+          'vec2 noiseStackUV(vec3 pos,int octaves,float falloff,float diff)' +
+          '{'
+        ' float displaceA = noiseStack(pos,octaves,falloff);'
+        
+          ' float displaceB = noiseStack(pos+vec3(3984.293,423.21,5235.19),' +
+          'octaves,falloff);'
+        ' return vec2(displaceA,displaceB);'
+        '}'
+        ''
+        'vec4 main( vec2 fragCoord ) {'
+        ' fragCoord.y = iResolution.y - fragCoord.y;'
+        ' float time = iTime;'
+        ' vec2 resolution = iResolution.xy;'
+        ' vec2 drag = iMouse.xy;'
+        ' vec2 offset = iMouse.xy;'
+        '  //'
+        ' float xpart = fragCoord.x/resolution.x;'
+        ' float ypart = fragCoord.y/resolution.y;'
+        ' //'
+        ' float clip = 210.0;'
+        ' float ypartClip = fragCoord.y/clip;'
+        ' float ypartClippedFalloff = clamp(2.0-ypartClip,0.0,1.0);'
+        ' float ypartClipped = min(ypartClip,1.0);'
+        ' float ypartClippedn = 1.0-ypartClipped;'
+        ' //'
+        
+          ' float xfuel = 1.0-abs(2.0*xpart-1.0);//pow(1.0-abs(2.0*xpart-1.' +
+          '0),0.5);'
+        ' //'
+        ' float timeSpeed = 0.5;'
+        ' float realTime = timeSpeed*time;'
+        ' //'
+        ' vec2 coordScaled = 0.01*fragCoord - 0.02*vec2(offset.x,0.0);'
+        
+          ' vec3 position = vec3(coordScaled,0.0) + vec3(1223.0,6434.0,8425' +
+          '.0);'
+        
+          ' vec3 flow = vec3(4.1*(0.5-xpart)*pow(ypartClippedn,4.0),-2.0*xf' +
+          'uel*pow(ypartClippedn,64.0),0.0);'
+        ' vec3 timing = realTime*vec3(0.0,-1.7,1.1) + flow;'
+        ' //'
+        
+          ' vec3 displacePos = vec3(1.0,0.5,1.0)*2.4*position+realTime*vec3' +
+          '(0.01,-0.7,1.3);'
+        ' vec3 displace3 = vec3(noiseStackUV(displacePos,2,0.4,0.1),0.0);'
+        ' //'
+        
+          ' vec3 noiseCoord = (vec3(2.0,1.0,1.0)*position+timing+0.4*displa' +
+          'ce3)/1.0;'
+        ' float noise = noiseStack(noiseCoord,3,0.4);'
+        ' //'
+        
+          ' float flames = pow(ypartClipped,0.3*xfuel)*pow(noise,0.3*xfuel)' +
+          ';'
+        ' //'
+        
+          ' float f = ypartClippedFalloff*pow(1.0-flames*flames*flames,8.0)' +
+          ';'
+        ' float fff = f*f*f;'
+        ' vec3 fire = 1.5*vec3(f, fff, fff*fff);'
+        ' //'
+        ' // smoke'
+        
+          ' float smokeNoise = 0.5+snoise(0.4*position+timing*vec3(1.0,1.0,' +
+          '0.2))/2.0;'
+        
+          ' vec3 smoke = vec3(0.3*pow(xfuel,3.0)*pow(ypart,2.0)*(smokeNoise' +
+          '+0.4*(1.0-noise)));'
+        ' //'
+        ' // sparks'
+        ' float sparkGridSize = 30.0;'
+        
+          ' vec2 sparkCoord = fragCoord - vec2(2.0*offset.x,190.0*realTime)' +
+          ';'
+        
+          ' sparkCoord -= 30.0*noiseStackUV(0.01*vec3(sparkCoord,30.0*time)' +
+          ',1,0.4,0.1);'
+        ' sparkCoord += 100.0*flow.xy;'
+        
+          ' if (mod(sparkCoord.y/sparkGridSize,2.0)<1.0) sparkCoord.x += 0.' +
+          '5*sparkGridSize;'
+        ' vec2 sparkGridIndex = vec2(floor(sparkCoord/sparkGridSize));'
+        ' float sparkRandom = prng(sparkGridIndex);'
+        
+          ' float sparkLife = min(10.0*(1.0-min((sparkGridIndex.y+(190.0*re' +
+          'alTime/sparkGridSize))/(24.0-20.0*sparkRandom),1.0)),1.0);'
+        ' vec3 sparks = vec3(0.0);'
+        ' if (sparkLife>0.0) {'
+        '  float sparkSize = xfuel*xfuel*sparkRandom*0.08;'
+        '  float sparkRadians = 999.0*sparkRandom*2.0*PI + 2.0*time;'
+        
+          '  vec2 sparkCircular = vec2(sin(sparkRadians),cos(sparkRadians))' +
+          ';'
+        
+          '  vec2 sparkOffset = (0.5-sparkSize)*sparkGridSize*sparkCircular' +
+          ';'
+        
+          '  vec2 sparkModulus = mod(sparkCoord+sparkOffset,sparkGridSize) ' +
+          '- 0.5*vec2(sparkGridSize);'
+        '  float sparkLength = length(sparkModulus);'
+        
+          '  float sparksGray = max(0.0, 1.0 - sparkLength/(sparkSize*spark' +
+          'GridSize));'
+        '  sparks = sparkLife*sparksGray*vec3(1.0,0.3,0.0);'
+        ' }'
+        ' //'
+        ' return(vec4(max(fire,sparks)+smoke,1.0));'
         '}')
       Align = Client
       Size.Width = 240.000000000000000000
-      Size.Height = 439.000000000000000000
+      Size.Height = 183.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       Viewport.Width = 220.000000000000000000
-      Viewport.Height = 419.000000000000000000
+      Viewport.Height = 163.000000000000000000
     end
     object Panel2: TPanel
       Align = Top
@@ -283,7 +435,7 @@ object Form14: TForm14
       object Button1: TButton
         Position.X = 48.000000000000000000
         Position.Y = 8.000000000000000000
-        Size.Width = 57.000000000000000000
+        Size.Width = 41.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -291,9 +443,9 @@ object Form14: TForm14
         OnClick = Button1Click
       end
       object Button2: TButton
-        Position.X = 113.000000000000000000
+        Position.X = 97.000000000000000000
         Position.Y = 8.000000000000000000
-        Size.Width = 64.000000000000000000
+        Size.Width = 48.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
@@ -310,6 +462,15 @@ object Form14: TForm14
         Text = 'SpeedButton1'
         OnClick = SpeedButton2Click
       end
+      object ckMouse: TCheckBox
+        Position.X = 153.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 64.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Mouse'
+      end
     end
     object Splitter1: TSplitter
       Align = MostRight
@@ -317,11 +478,35 @@ object Form14: TForm14
       MinSize = 20.000000000000000000
       Position.X = 240.000000000000000000
       Size.Width = 10.000000000000000000
-      Size.Height = 480.000000000000000000
+      Size.Height = 496.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'splitterstyle'
       OnDblClick = Splitter1DblClick
       OnMouseMove = Splitter1MouseMove
+    end
+    object lbShaders: TListBox
+      Align = Top
+      Position.Y = 41.000000000000000000
+      Size.Width = 240.000000000000000000
+      Size.Height = 264.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      DisableFocusEffect = True
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      OnItemClick = lbShadersItemClick
+      Viewport.Width = 236.000000000000000000
+      Viewport.Height = 260.000000000000000000
+    end
+    object Splitter2: TSplitter
+      Align = Top
+      Cursor = crVSplit
+      MinSize = 20.000000000000000000
+      Position.Y = 305.000000000000000000
+      Size.Width = 240.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
     end
   end
 end
