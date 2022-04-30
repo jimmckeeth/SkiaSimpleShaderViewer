@@ -5,7 +5,7 @@
     </ProjectExtensions>
     <PropertyGroup>
         <DeviceId Condition="'$(Platform)'=='Android'"/>
-        <DeviceId Condition="'$(Platform)'=='Android64'"/>
+        <DeviceId Condition="'$(Platform)'=='Android64'">OUKIC21Pro57163</DeviceId>
         <DeviceId Condition="'$(Platform)'=='iOSDevice64'">00008030-000475912260402E</DeviceId>
     </PropertyGroup>
     <ItemGroup Condition="'$(Platform)'=='OSX64'">
@@ -72,7 +72,7 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(SKIADIR)\Binary\Android64\Release\libsk4d.so" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="$(SKIADIR)\Binary\Android64\Release\libsk4d.so" Condition="'$(Config)'=='Release'">
             <RemoteDir>SimpleShader\library\lib\arm64-v8a\</RemoteDir>
             <RemoteName>libsk4d.so</RemoteName>
             <DeployClass>Skia</DeployClass>
@@ -82,7 +82,7 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
-        <DeployFile Include="$(SKIADIR)\Binary\Android64\Release\libsk4d.so" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="$(SKIADIR)\Binary\Android64\Release\libsk4d.so" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SimpleShader\library\lib\arm64-v8a\</RemoteDir>
             <RemoteName>libsk4d.so</RemoteName>
             <DeployClass>Skia</DeployClass>
@@ -291,7 +291,7 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(SKIADIR)\Binary\Android\Release\libsk4d.so" Condition="'$(Config)'=='Debug' And '$(AndroidAppBundle)'=='true'">
+        <DeployFile Include="$(SKIADIR)\Binary\Android\Release\libsk4d.so" Condition="'$(Config)'=='Release' And '$(AndroidAppBundle)'=='true'">
             <RemoteDir>SimpleShader\library\lib\armeabi-v7a\</RemoteDir>
             <RemoteName>libsk4d.so</RemoteName>
             <DeployClass>Skia</DeployClass>
@@ -301,7 +301,7 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
-        <DeployFile Include="$(SKIADIR)\Binary\Android\Release\libsk4d.so" Condition="'$(Config)'=='Release' And '$(AndroidAppBundle)'=='true'">
+        <DeployFile Include="$(SKIADIR)\Binary\Android\Release\libsk4d.so" Condition="'$(Config)'=='Debug' And '$(AndroidAppBundle)'=='true'">
             <RemoteDir>SimpleShader\library\lib\armeabi-v7a\</RemoteDir>
             <RemoteName>libsk4d.so</RemoteName>
             <DeployClass>Skia</DeployClass>

@@ -3,7 +3,7 @@ object frmShaderView: TfrmShaderView
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
   ClientHeight = 496
-  ClientWidth = 634
+  ClientWidth = 636
   Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -13,7 +13,7 @@ object frmShaderView: TfrmShaderView
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
     HitTest = True
-    Size.Width = 634.000000000000000000
+    Size.Width = 636.000000000000000000
     Size.Height = 496.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
@@ -21,7 +21,7 @@ object frmShaderView: TfrmShaderView
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
     object SpeedButton3: TSpeedButton
       Anchors = [akTop, akRight]
-      Position.X = 586.000000000000000000
+      Position.X = 588.000000000000000000
       Position.Y = 8.000000000000000000
       Size.Width = 40.000000000000000000
       Size.Height = 22.000000000000000000
