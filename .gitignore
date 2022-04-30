@@ -73,3 +73,4 @@ dcu/
 src/AndroidManifest.template.xml
 
 *.res
+*.user

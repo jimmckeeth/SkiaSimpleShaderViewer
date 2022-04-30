@@ -7,7 +7,7 @@ uses
   FMX.Forms,
   FMX.Types,
   Skia.FMX,
-  SimpleShaderMain in 'SimpleShaderMain.pas' {Form14};
+  SimpleShaderMain in 'SimpleShaderMain.pas' {frmShaderView};
 
 {$R *.res}
 
@@ -22,6 +22,6 @@ begin
   GlobalUseSkiaRasterWhenAvailable := False;
 
   Application.Initialize;
-  Application.CreateForm(TForm14, Form14);
+  Application.CreateForm(TfrmShaderView, frmShaderView);
   Application.Run;
 end.

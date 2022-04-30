@@ -1,4 +1,4 @@
-object Form14: TForm14
+object frmShaderView: TfrmShaderView
   Left = 0
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
@@ -128,6 +128,7 @@ object Form14: TForm14
       'C384.12,377.48,387.64,389.33,389.21,397.2Z" transform="translate' +
       '(-7.39 -9.58)" fill-rule="evenodd" fill="url(#a)"/></svg>'
     object FloatAnimation1: TFloatAnimation
+      Enabled = True
       Delay = 2.000000000000000000
       Duration = 1.000000000000000000
       PropertyName = 'Opacity'
