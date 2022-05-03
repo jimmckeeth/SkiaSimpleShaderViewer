@@ -89,7 +89,13 @@ begin
       'C:\Users\Jim\Desktop\Skia4Delphi Webinar\Demo\SimpleShader\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
 
     FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
-    FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+    if FEffect.UniformExists('iImage1Resolution') then
+      case FEffect.UniformType['iImage1Resolution'] of
+        TSkRuntimeEffectUniformType.Float2:
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+        TSkRuntimeEffectUniformType.Float3:
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
+      end;
   end;
 
   SkAnimatedPaintBox1.Duration := Double.MaxValue; // Run forever!
@@ -127,7 +133,7 @@ procedure TfrmShaderView.LoadShader(const AShaderFile: string);
 begin
   Memo1.Lines.LoadFromFile(AShaderFile);
   Memo1.Lines.Text := Memo1.Lines.Text.Replace(#9, #32);
-  //RunShader;
+  RunShader;
   MultiView1.HideMaster;
 end;
 
@@ -167,7 +173,8 @@ begin
   end;
   if lbShaders.Count > 0 then
   begin
-    lbShaders.ItemIndex := random(lbShaders.Count);
+    //lbShaders.ItemIndex := random(lbShaders.Count);
+    lbShaders.ItemIndex := lbShaders.Items.IndexOf('Playing marble');
     LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
   end;
 end;
