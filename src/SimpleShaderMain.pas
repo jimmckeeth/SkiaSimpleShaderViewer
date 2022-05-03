@@ -180,8 +180,7 @@ begin
   end;
   if lbShaders.Count > 0 then
   begin
-    //lbShaders.ItemIndex := random(lbShaders.Count);
-    lbShaders.ItemIndex := lbShaders.Items.IndexOf('Playing marble');
+    lbShaders.ItemIndex := random(lbShaders.Count);
     LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
   end;
 end;
