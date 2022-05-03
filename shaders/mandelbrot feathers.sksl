@@ -1,0 +1,41 @@
+uniform float2 iResolution;
+uniform float iTime;
+uniform float4 iMouse;
+
+// mandelbrot feathers 
+// Created by ronwnor in 2022-05-02
+// https://www.shadertoy.com/view/7tffDj
+
+const float tau = 6.28; 
+
+mat2 rot(float a) {
+    return mat2(
+        cos(a), sin(a),
+        -sin(a), cos(a)
+);}
+vec4 main( in vec2 fragCoord )
+{
+    float zoom = 6.;
+    vec2 location = vec2(-.1640316,-1.025873);
+    vec2 u1 = (2.*fragCoord - iResolution.xy)/iResolution.y;
+    u1 *= exp(-zoom);
+    u1 += location;
+    vec2 u2 = u1;
+    vec3 col = vec3(0); 
+
+    //loop
+    for(float i = 0; i < 64; i++){
+        u2 = vec2(u2.x*u2.x - u2.y*u2.y,2.*u2.x*u2.y)+u1;
+        
+        if((u2*rot(cos(3.1415692*iTime*i/20.))).y < 8.){}
+        else if(col == vec3(0.)){
+            col += i/64.;
+        }
+    }
+    
+    
+    col = 0.5 + 0.5*cos(tau*(col+.4+vec3(.0,.1,.2)));
+
+    // Output to screen
+    return (vec4(col,1.0));
+}

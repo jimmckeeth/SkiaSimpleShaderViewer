@@ -28,6 +28,7 @@ type
     ShadowEffect1: TShadowEffect;
     Splitter2: TSplitter;
     ckMouse: TCheckBox;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
       const ACanvas: ISkCanvas; const ADest: TRectF;
@@ -45,7 +46,8 @@ type
       const Item: TListBoxItem);
   private
     { Private declarations }
-    FShader: ISkRuntimeEffect;
+    FEffect: ISkRuntimeEffect;
+    FShader: ISkShader;
     FPaint: ISkPaint;
     procedure RunShader;
     procedure LoadShaders;
@@ -71,15 +73,33 @@ const
 procedure TfrmShaderView.RunShader;
 begin
   SkAnimatedPaintBox1.Animate := False;
-  FShader := nil;
+  FEffect := nil;
   FPaint := nil;
   var AErrorText := '';
-  FShader := TSkRuntimeEffect.MakeForShader(Memo1.Text, AErrorText);
+  FEffect := TSkRuntimeEffect.MakeForShader(Memo1.Text, AErrorText);
   if AErrorText<>'' then
     raise Exception.Create(AErrorText);
 
   FPaint := TSkPaint.Create;
-  Fpaint.Shader := Fshader.MakeShader(True);
+
+  if FEffect.ChildExists('iImage1') then
+  begin
+    var image1: ISkImage := TSkImage.MakeFromEncodedFile(
+      '..\..\..\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
+
+    FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
+    Fpaint.Shader := FEffect.MakeShader(True);
+    if FEffect.UniformExists('iImage1Resolution') then
+      case FEffect.UniformType['iImage1Resolution'] of
+        TSkRuntimeEffectUniformType.Float2:
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+        TSkRuntimeEffectUniformType.Float3:
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
+      end;
+  end
+  else
+    Fpaint.Shader := FEffect.MakeShader(True);
+
   SkAnimatedPaintBox1.Duration := Double.MaxValue; // Run forever!
   SkAnimatedPaintBox1.Redraw;
   SkAnimatedPaintBox1.Animate := True;
@@ -89,12 +109,17 @@ procedure TfrmShaderView.SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
   const ACanvas: ISkCanvas; const ADest: TRectF; const AProgress: Double;
   const AOpacity: Single);
 begin
-  if Assigned(FShader) and Assigned(FPaint) then
+  if Assigned(FEffect) and Assigned(FPaint) then
   begin
-    if FShader.UniformExists('iResolution') then
-      FShader.SetUniform('iResolution', PointF(ADest.Width, ADest.Height));
-    if FShader.UniformExists('iTime') then
-      FShader.SetUniform('iTime', AProgress * SkAnimatedPaintBox1.Duration );
+    if FEffect.UniformExists('iResolution') then
+    begin
+      if FEffect.UniformType['iResolution'] = TSkRuntimeEffectUniformType.Float3 then
+        FEffect.SetUniform('iResolution', [ADest.Width, ADest.Height, 0])
+      else
+        FEffect.SetUniform('iResolution', PointF(ADest.Width, ADest.Height));
+    end;
+    if FEffect.UniformExists('iTime') then
+      FEffect.SetUniform('iTime', AProgress * SkAnimatedPaintBox1.Duration );
     ACanvas.DrawRect(ADest, FPaint);
   end;
 end;
@@ -102,8 +127,8 @@ end;
 procedure TfrmShaderView.SkAnimatedPaintBox1MouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Single);
 begin
-  if ckMouse.IsChecked and FShader.UniformExists('iMouse') then
-    FShader.SetUniform('iMouse', [X, Y, 0, Math.IfThen(ssLeft in Shift, 1, 0)]);
+  if ckMouse.IsChecked and FEffect.UniformExists('iMouse') then
+    FEffect.SetUniform('iMouse', [X, Y, 0, Math.IfThen(ssLeft in Shift, 1, 0)]);
 end;
 
 procedure TfrmShaderView.Button1Click(Sender: TObject);
@@ -131,7 +156,6 @@ procedure TfrmShaderView.FormCreate(Sender: TObject);
 begin
   LoadShaders;
   MultiView1.Mode := TMultiViewMode.Drawer;
-  RunShader;
 end;
 
 procedure TfrmShaderView.lbShadersItemClick(const Sender: TCustomListBox;

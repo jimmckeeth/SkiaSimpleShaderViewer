@@ -1,0 +1,45 @@
+uniform float2 iResolution;
+uniform float iTime;
+uniform float4 iMouse;
+
+// julia feathers 
+// Created by sympou in 2022-05-03
+// https://www.shadertoy.com/view/slfBD2
+
+const float tau = 6.28; 
+
+mat2 rot(float a) {
+    return mat2(
+        cos(a), sin(a),
+        -sin(a), cos(a)
+);}
+vec4 main( in vec2 fragCoord )
+{
+    float zoom = .75;
+    vec2 u1 = (2.*fragCoord - iResolution.xy)/iResolution.y;
+    u1 *= zoom; //exp(-zoom);
+
+	vec2 mouse = iMouse.xy/iResolution.xy*2.-1.;
+    
+    if (mouse.x == -1.0 && mouse.y == -1.0) mouse = vec2(-0.26,0.85); 
+
+    float val = 0.; 
+
+    //loop (originally i < 64)
+    for(float i = 0.; i < 15.; i++){
+            
+        u1 = mouse + vec2(u1.x*u1.x - u1.y*u1.y,2.*u1.x*u1.y);       
+        vec2 u2 = u1*rot(3.1415692*(iTime*0.5+i));
+        
+        if (u2.y >= 8.) {
+            val += 0.01 + i/64. +  1./u2.y;
+        }
+      	if (val!=0.) break;
+    }
+    
+    
+    vec3 col = 0.5 + 0.5*cos(tau*(val+.4+vec3(.0,.1,.2)));
+
+    // Output to screen
+    return( vec4(col,1.0));
+}
