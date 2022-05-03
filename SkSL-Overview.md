@@ -60,7 +60,7 @@ before handing it over to the graphics driver.
   vectors), and may also be the constants `0` or `1` to produce a constant 0 or
   1 in that channel instead of selecting anything from the source vector.
   `foo.rgb1` is equivalent to `float4(foo.rgb, 1)`.
-* All texture functions are named "sample", e.g. sample(sampler2D, float3) is
+* All texture functions are named "sample", e.g. `sample(sampler2D, float3)` is
   equivalent to GLSL's `textureProj(sampler2D, float3)`.
 * Functions support the `inline` modifier, which causes the compiler to ignore
   its normal inlining heuristics and inline the function if at all possible
