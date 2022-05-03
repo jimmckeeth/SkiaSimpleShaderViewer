@@ -74,3 +74,4 @@ src/AndroidManifest.template.xml
 
 *.res
 *.user
+*.tmp

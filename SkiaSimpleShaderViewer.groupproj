@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{CDF873C8-16EE-46BA-AED7-39F60C80237D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="src\SimpleShader.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SimpleShader">
+        <MSBuild Projects="src\SimpleShader.dproj"/>
+    </Target>
+    <Target Name="SimpleShader:Clean">
+        <MSBuild Projects="src\SimpleShader.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleShader:Make">
+        <MSBuild Projects="src\SimpleShader.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SimpleShader"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SimpleShader:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SimpleShader:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
