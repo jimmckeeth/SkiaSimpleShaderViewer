@@ -86,7 +86,7 @@ begin
   if FEffect.UniformExists('iImage1') then
   begin
     var image1: ISkImage := TSkImage.MakeFromEncodedFile(
-      'C:\Users\Jim\Desktop\Skia4Delphi Webinar\Demo\SimpleShader\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
+      '..\..\..\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
 
     FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
     if FEffect.UniformExists('iImage1Resolution') then
