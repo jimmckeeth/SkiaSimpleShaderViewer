@@ -434,23 +434,31 @@ object frmShaderView: TfrmShaderView
       Size.PlatformDefault = False
       TabOrder = 1
       object Button1: TButton
+        Hint = 'Run'
         Position.X = 48.000000000000000000
-        Position.Y = 8.000000000000000000
-        Size.Width = 41.000000000000000000
-        Size.Height = 22.000000000000000000
+        Position.Y = 7.000000000000000000
+        Size.Width = 17.000000000000000000
+        Size.Height = 25.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = 'playtoolbutton'
         TabOrder = 0
         Text = 'Run'
+        ParentShowHint = False
+        ShowHint = True
         OnClick = Button1Click
       end
       object Button2: TButton
-        Position.X = 97.000000000000000000
-        Position.Y = 8.000000000000000000
-        Size.Width = 48.000000000000000000
-        Size.Height = 22.000000000000000000
+        Hint = 'Load'
+        Position.X = 81.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 16.000000000000000000
+        Size.Height = 19.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = 'pagecurltoolbutton'
         TabOrder = 1
         Text = 'Load'
+        ParentShowHint = False
+        ShowHint = True
         OnClick = Button2Click
       end
       object SpeedButton2: TSpeedButton
@@ -464,13 +472,27 @@ object frmShaderView: TfrmShaderView
         OnClick = SpeedButton2Click
       end
       object ckMouse: TCheckBox
-        Position.X = 153.000000000000000000
-        Position.Y = 10.000000000000000000
+        Anchors = [akTop, akRight]
+        Hint = 'Interact with Mouse'
+        Position.X = 176.000000000000000000
         Size.Width = 64.000000000000000000
         Size.Height = 19.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         Text = 'Mouse'
+        ParentShowHint = False
+        ShowHint = True
+      end
+      object Button3: TButton
+        Position.X = 113.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 24.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'cameratoolbutton'
+        TabOrder = 3
+        Text = 'Button3'
+        Visible = False
       end
     end
     object Splitter1: TSplitter
