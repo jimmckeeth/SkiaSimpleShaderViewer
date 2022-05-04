@@ -92,37 +92,35 @@ end;
 
 procedure TfrmShaderView.RunShader;
 begin
-  SkAnimatedPaintBox1.Animate := False;
+  SkAnimatedPaintBox1.Enabled := False;
   FEffect := nil;
   FPaint := nil;
   var AErrorText := '';
   FEffect := TSkRuntimeEffect.MakeForShader(Memo1.Text, AErrorText);
-  if AErrorText<>'' then
+  if AErrorText <> '' then
     raise Exception.Create(AErrorText);
-
-  FPaint := TSkPaint.Create;
 
   if FEffect.ChildExists('iImage1') then
   begin
     var image1: ISkImage := TSkImage.MakeFromEncodedFile(
       '..\..\..\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
 
-    FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
-    Fpaint.Shader := FEffect.MakeShader(True);
-    if FEffect.UniformExists('iImage1Resolution') then
-      case FEffect.UniformType['iImage1Resolution'] of
-        TSkRuntimeEffectUniformType.Float2:
-            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
-        TSkRuntimeEffectUniformType.Float3:
-            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
-      end;
-  end
-  else
-    Fpaint.Shader := FEffect.MakeShader(True);
+    if Assigned(image1) then
+    begin
+      FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
+      if FEffect.UniformExists('iImage1Resolution') then
+        case FEffect.UniformType['iImage1Resolution'] of
+          TSkRuntimeEffectUniformType.Float2:
+              FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+          TSkRuntimeEffectUniformType.Float3:
+              FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
+        end;
+    end;
+  end;
 
-  SkAnimatedPaintBox1.Duration := Double.MaxValue; // Run forever!
-  SkAnimatedPaintBox1.Redraw;
-  SkAnimatedPaintBox1.Animate := True;
+  FPaint := TSkPaint.Create;
+  FPaint.Shader := FEffect.MakeShader(True);
+  SkAnimatedPaintBox1.Enabled := True;
 end;
 
 procedure TfrmShaderView.SkAnimatedPaintBox1AnimationDraw(ASender: TObject;

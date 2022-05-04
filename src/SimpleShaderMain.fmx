@@ -13,6 +13,7 @@ object frmShaderView: TfrmShaderView
   DesignerMasterStyle = 0
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
+    Enabled = False
     HitTest = True
     Size.Width = 636.000000000000000000
     Size.Height = 496.000000000000000000
@@ -20,17 +21,6 @@ object frmShaderView: TfrmShaderView
     OnMouseMove = SkAnimatedPaintBox1MouseMove
     Duration = 100000.000000000000000000
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
-    object SpeedButton3: TSpeedButton
-      Anchors = [akTop, akRight]
-      Position.X = 588.000000000000000000
-      Position.Y = 8.000000000000000000
-      Size.Width = 40.000000000000000000
-      Size.Height = 22.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = 'escapetoolbutton'
-      Text = 'SpeedButton3'
-      OnClick = SpeedButton3Click
-    end
   end
   object SpeedButton1: TSpeedButton
     Position.X = 8.000000000000000000
@@ -170,6 +160,17 @@ object frmShaderView: TfrmShaderView
           Text = '000.0 fps'
         end>
     end
+  end
+  object SpeedButton3: TSpeedButton
+    Anchors = [akTop, akRight]
+    Position.X = 588.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 40.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'escapetoolbutton'
+    Text = 'SpeedButton3'
+    OnClick = SpeedButton3Click
   end
   object MultiView1: TMultiView
     MasterButton = SpeedButton1
