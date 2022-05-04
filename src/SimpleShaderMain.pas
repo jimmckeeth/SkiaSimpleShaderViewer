@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, StrUtils, Math,
   FMX.Memo.Types, FMX.StdCtrls, FMX.Controls.Presentation, FMX.ScrollBox,
   FMX.Memo, FMX.TabControl, Skia, Skia.FMX, FMX.Layouts, FMX.MultiView,
-  FMX.ListBox, FMX.Ani, FMX.Effects;
+  FMX.ListBox, FMX.Ani, FMX.Effects, FMX.Objects;
 
 type
   TfrmShaderView = class(TForm)
@@ -29,12 +29,15 @@ type
     Splitter2: TSplitter;
     ckMouse: TCheckBox;
     Button3: TButton;
+    LabelFPS: TSkLabel;
+    RectangleFps: TRectangle;
     procedure Button1Click(Sender: TObject);
     procedure SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
       const ACanvas: ISkCanvas; const ADest: TRectF;
       const AProgress: Double; const AOpacity: Single);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormPaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
     procedure SpeedButton2Click(Sender: TObject);
     procedure Splitter1MouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Single);
@@ -44,11 +47,14 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure lbShadersItemClick(const Sender: TCustomListBox;
       const Item: TListBoxItem);
+    procedure RectangleFpsClick(Sender: TObject);
   private
     { Private declarations }
     FEffect: ISkRuntimeEffect;
     FShader: ISkShader;
     FPaint: ISkPaint;
+    FPaintCount: Int64;
+    FstopWatch: TDateTime;
     procedure RunShader;
     procedure LoadShaders;
     procedure LoadShader(const AShaderFile: string);
@@ -64,7 +70,7 @@ implementation
 {$R *.fmx}
 
 uses
-  IOUtils;
+  IOUtils, System.DateUtils;
 
 const
   ShaderPath = '..\..\..\Shaders';
@@ -158,6 +164,17 @@ begin
   MultiView1.Mode := TMultiViewMode.Drawer;
 end;
 
+procedure TfrmShaderView.FormPaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+begin
+  if FPaintCount = 0 then
+  begin
+    FstopWatch := now;
+  end;
+  inc(FPaintCount);
+  var LFps := FPaintCount / ((now - FstopWatch) * (1 / OneSecond));
+  LabelFPS.Text := Format('%3.1f fps', [LFps]);
+end;
+
 procedure TfrmShaderView.lbShadersItemClick(const Sender: TCustomListBox;
   const Item: TListBoxItem);
 begin
@@ -183,6 +200,11 @@ begin
     lbShaders.ItemIndex := random(lbShaders.Count);
     LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
   end;
+end;
+
+procedure TfrmShaderView.RectangleFpsClick(Sender: TObject);
+begin
+  RectangleFps.Visible := false;
 end;
 
 procedure TfrmShaderView.SpeedButton2Click(Sender: TObject);

@@ -9,6 +9,7 @@ object frmShaderView: TfrmShaderView
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnPaint = FormPaint
   DesignerMasterStyle = 0
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
@@ -48,8 +49,8 @@ object frmShaderView: TfrmShaderView
   end
   object SkSvg1: TSkSvg
     Anchors = [akRight, akBottom]
-    Position.X = 410.000000000000000000
-    Position.Y = 384.000000000000000000
+    Position.X = 412.000000000000000000
+    Position.Y = 364.000000000000000000
     Size.Width = 216.000000000000000000
     Size.Height = 104.000000000000000000
     Size.PlatformDefault = False
@@ -141,6 +142,33 @@ object frmShaderView: TfrmShaderView
       Softness = 0.300000011920929000
       Opacity = 0.600000023841857900
       ShadowColor = claBlack
+    end
+  end
+  object RectangleFps: TRectangle
+    Anchors = [akRight, akBottom]
+    Fill.Color = claWhite
+    Opacity = 0.500000000000000000
+    Position.X = 564.000000000000000000
+    Position.Y = 472.000000000000000000
+    Size.Width = 70.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    OnClick = RectangleFpsClick
+    object LabelFPS: TSkLabel
+      Align = Client
+      Margins.Right = 2.000000000000000000
+      Size.Width = 68.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      AutoSize = False
+      StyledSettings = [Family, Size, FontColor]
+      TextSettings.Font.Weight = Bold
+      TextSettings.HorzAlign = Trailing
+      Words = <
+        item
+          Text = '000.0 fps'
+        end>
     end
   end
   object MultiView1: TMultiView
