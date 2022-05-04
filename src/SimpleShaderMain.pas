@@ -156,6 +156,7 @@ end;
 
 procedure TfrmShaderView.LoadShader(const AShaderFile: string);
 begin
+  FPaintCount := 0;
   Memo1.Lines.LoadFromFile(AShaderFile);
   Memo1.Lines.Text := Memo1.Lines.Text.Replace(#9, #32);
   RunShader;
