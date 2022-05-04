@@ -70,7 +70,7 @@ implementation
 {$R *.fmx}
 
 uses
-  IOUtils, System.DateUtils;
+  IOUtils, System.DateUtils, System.Generics.Collections;
 
 const
   ShaderExt = '.sksl';
@@ -204,11 +204,10 @@ begin
     exit;
   end;
 
-  var Shaders := TDirectory.GetFiles(ShaderPath,'*'+ShaderExt);
-  for var shader in shaders do
-  begin
+  var Shaders := TDirectory.GetFiles(ShaderPath, '*' + ShaderExt);
+  TArray.Sort<string>(Shaders);
+  for var shader in Shaders do
     lbShaders.Items.Add(TPath.GetFileNameWithoutExtension(Shader));
-  end;
   if lbShaders.Count > 0 then
   begin
     lbShaders.ItemIndex := random(lbShaders.Count);
