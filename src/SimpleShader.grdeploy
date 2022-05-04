@@ -1,0 +1,31 @@
+{
+  "Configurations" : ["Debug", "Release"],
+  "iOS" : [{
+      "LocalName" : "..\\shaders",
+      "RemoteDir" : "StartUp\\Documents\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : false
+    }],
+  "Android" : [{
+      "LocalName" : "..\\shaders",
+      "RemoteDir" : "assets\\internal",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : false
+    }],
+  "MacOS" : [{
+      "LocalName" : "..\\shaders",
+      "RemoteDir" : "Contents\\Resources\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : false
+    }],
+  "Linux" : [{
+      "LocalName" : "..\\shaders",
+      "RemoteDir" : ".\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : false
+    }]
+}

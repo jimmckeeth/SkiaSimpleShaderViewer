@@ -73,8 +73,22 @@ uses
   IOUtils, System.DateUtils;
 
 const
-  ShaderPath = '..\..\..\Shaders';
   ShaderExt = '.sksl';
+
+function ShaderPath: string;
+begin
+  {$IFDEF MSWINDOWS}
+  Result := TPath.GetFullPath('..\..\..\Shaders\');
+  {$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
+  Result := TPath.GetDocumentsPath;
+  {$ELSEIF defined(MACOS)}
+  Result := TPath.GetFullPath('../Resources/');
+  {$ELSE}
+  Result := ExtractFilePath(ParamStr(0));
+  {$ENDIF}
+  if (Result <> '') and not Result.EndsWith(PathDelim) then
+    Result := Result + PathDelim;
+end;
 
 procedure TfrmShaderView.RunShader;
 begin
