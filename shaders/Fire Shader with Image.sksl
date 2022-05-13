@@ -1,6 +1,7 @@
 uniform float iTime;
 uniform float2 iResolution;
-uniform shader iImage1;      
+uniform shader iImage1;
+uniform float2 iImage1Resolution;
 
 float rand(vec2 n) {
     return fract(sin(cos(dot(n, vec2(12.9898,12.1414)))) * 83758.5453);
@@ -23,6 +24,7 @@ float fbm(vec2 n) {
 }
 
 vec4 main( in vec2 fragCoord ) {
+    fragCoord.y = iResolution.y - fragCoord.y;
 
     const vec3 c1 = vec3(0.5, 0.0, 0.1);
     const vec3 c2 = vec3(0.9, 0.1, 0.0);
@@ -53,8 +55,9 @@ vec4 main( in vec2 fragCoord ) {
     vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
     vec3 color = vec3(1.0/(pow(c+1.61,vec3(4.0))) * cos(shift * fragCoord.y / iResolution.y));
     
-    color=vec3(1.0,.2,.05)/(pow((r.y+r.y)* max(.0,p.y)+0.1, 4.0));;
-    color += ((iImage1,uv*0.6+vec2(.5,.1)).xyz*0.01*pow((r.y+r.y)*.65,5.0)+0.055)*mix( vec3(.9,.4,.3),vec3(.7,.5,.2), uv.y);
+    color=vec3(1.0,.2,.05)/(pow((r.y+r.y)* max(.0,p.y)+0.1, 4.0));
+    float2 imageUV = (uv*0.6+vec2(.5,.1));
+    color += (iImage1.eval(iResolution.xy*vec2(imageUV.x, 1.0 - imageUV.y)).xyz*0.01*pow((r.y+r.y)*.65,5.0)+0.055)*mix( vec3(.9,.4,.3),vec3(.7,.5,.2), uv.y);
     color = color/(1.0+max(vec3(0),color));
     return vec4(color.x, color.y, color.z, alpha);
 }
