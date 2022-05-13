@@ -1,0 +1,176 @@
+uniform float iTime;
+uniform float2 iResolution;
+
+// Plasma cube 
+// Created by patu in 2016-03-13
+// https://www.shadertoy.com/view/4d3SRN
+
+// ShaderToy extension for Chrome:
+// http://bit.ly/shadertoy-plugin
+
+const vec3 BOX = vec3(1.0);
+const float PI = 3.14159265;
+const vec3 e = vec3(0.02,0,0);
+
+
+float sdBox( vec3 p, vec3 b ) {
+  vec3 d = abs(p) - b;
+  return min(max(d.x ,max(d.y, d.z)), 0.0) +
+         length(max(d, 0.0));
+}
+
+mat3 rotationZ(float k) {
+    return mat3( // rotationZ matrix;
+        vec3(cos(k), -sin(k), 0.0),
+        vec3(sin(k), cos(k), 0.0),
+        vec3(0.0, 0.0, 1.0)
+    );  
+}
+    
+    
+mat3 rotationX (float k) {
+    return  mat3( // rotationX matrix;
+        vec3(1.0, 0.0, 0.0),
+        vec3(0.0, cos(k * 1.2), -sin(k * 1.2)),
+        vec3(0.0, sin(k * 1.2), cos(k * 1.2))        
+    ); 
+}
+
+vec4 cubePlasma (vec2 coord, vec3 p) {
+    
+    float 
+        k = iTime * 3.0,
+        as = 4.78207464329,
+    	fd = 12.18910931609,
+    	as1 = 2.839499561581 / 24.0 + sin(k) * 0.02,
+    	fd2 = 2.188989119604,
+    	ps = -5.624243766069,
+    	ps2 = 9.393007904291,
+    	p1 = sin(k / ps) * 4.0,
+    	p2 = sin(k / fd) * 3.0,
+    	t3 = sin(k / fd2) + cos(as1),
+        t4 = sin(k / ps);    
+    
+    coord.x = floor(coord.x * 16.0) / 16.0;
+    coord.y = floor(coord.y * 16.0) / 16.0;
+    
+    float x = sin(p1 + coord.x) * sin(p2 + coord.y) + sin(t3 + coord.x) * sin(t4 + coord.y) * -p.x;
+    
+    float r = (0.87 + sin((x / as1 ) / 8.0) + sin(x / as1)) / 2.0;
+    float g = (0.42 + sin(x / as1)) / 2.0; 
+    float b = (0.77 + sin(x / as1 )) + sin(coord.y / as1) / 14.0;
+
+    if (
+        coord.y <= -0.9 || coord.y >= 0.9 ||
+        coord.x <= -0.9 || coord.x >= 0.9    
+    ) { 
+        r += 2.;  
+        b += 2.; 
+        g += 2.; 
+    }
+    
+  
+    vec4 color = vec4(vec3(r, g, b) * 2.0, 1.0);
+     
+    return color;
+    
+}
+
+vec4 boxmap( in vec3 p, in float k ) {
+    vec3 m = pow( abs(p), vec3(k) );
+	vec4 x = cubePlasma(p.yz, p);
+	vec4 y = cubePlasma(p.zx, p);
+	vec4 z = cubePlasma(p.xy, p);
+	return (x * m.x + y * m.y + z * m.z) / (m.x + m.y + m.z);
+}
+
+vec2 distance_to_obj(in vec3 p) {
+    return vec2(sdBox(p, vec3(1.)), 1.0);
+}
+
+vec4 main( in vec2 fragCoord ) {
+    vec4 fragColor;
+    
+  	const float maxd = 20.0; //Max depth
+  	
+    vec2 vPos = fragCoord.xy/iResolution.xy - 0.5;
+    vec2 ovPos = vPos;
+    
+    vec2 d = vec2(0.5, 0.0);    
+    
+    fragColor = vec4(0.0);
+    
+  	vec3 c, p, N, vuv, vrp, prp;    
+        
+    float 
+        k = iTime,
+    	f = 1.0, // ray start
+    	mx,
+        my;
+    
+    k = iTime * 1.7;
+
+    float glow = 0.0;
+
+    vPos.x += sin(vPos.y * 2. + k) / 48.;
+	
+    // Camera setup.
+    vuv = vec3(0, -1., 0.); 
+    prp = vec3(3.
+        //sin(k) * 6.3,
+        //sin(k) * 5.2,
+        //cos(k) * 6.
+    ); //cam position
+    
+    vrp = vec3(0);
+     
+    // Camera setup.
+    
+    vec3 vpn = normalize(vrp - prp);
+    vec3 u = normalize(cross(vuv, vpn));
+    vec3 v = cross(vpn, u);
+    vec3 vcv = (prp + vpn);
+    vec3 scrCoord = vcv + vPos.x * u * iResolution.x / iResolution.y + vPos.y * v;
+    vec3 scp = normalize(scrCoord - prp);
+
+    // Raymarching.
+    float minDist = 140.;
+    for (int i = 0; i < 32; i++) {	
+      
+        if ((abs(d.x) < .01) || (f > maxd)) break;
+   
+        f += d.x;
+        p = prp + scp * f;    
+        p = p * rotationZ(k) * rotationX(k);
+        d = distance_to_obj(p);
+        if (i < 6) {
+        	minDist = min(minDist, d.x * 7.);
+        }
+        //minDist += min(minDist, d.x * 3.) / 2.;
+        if (i < 6) glow = pow( 1. / minDist, 0.8);
+    }  
+  
+    if (f < maxd){
+
+        if (d.y == 1.0) c = boxmap( p, 34.0 ).xyz;
+      
+        vec3 n = vec3(
+            d.x - distance_to_obj(p - e.xyy).x,
+            d.x - distance_to_obj(p - e.yxy).x,
+            d.x - distance_to_obj(p - e.yyx).x
+        );
+    
+        N = normalize(n);
+		vec3 L = vec3(8.5 , 1.0, 8.0 );
+        float b = abs(dot(N, normalize(prp - p + L)));
+		
+        fragColor += vec4(max((b * c + pow(b, 64.0)) * (1.0 - f *.01), 0.0), 1.0);
+        
+        
+  	} else {
+        
+        fragColor = vec4(vec3(normalize(scp) / 2.), 0.) + glow;
+    }
+    return fragColor;
+}	 
+ 				    

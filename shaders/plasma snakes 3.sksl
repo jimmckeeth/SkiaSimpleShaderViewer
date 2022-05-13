@@ -1,0 +1,26 @@
+uniform float3 iResolution;      // Viewport resolution (pixels)
+uniform float  iTime;            // Shader playback time (s)
+
+vec2 P(float t) {
+  return vec2( 1.7*cos(t)+.5*sin(-2.7*t), .8*sin(1.2*t)+.5*cos(3.2*t) ) /1.5;
+}   
+
+vec4 main( vec2 U )
+{
+    vec4 o;
+    o = vec4(0.0);
+  	vec2 R = iResolution.xy;  
+    U = (2.*U -R ) / R.y;
+    
+    for (float dt=0.; dt<5.; dt+= .01) {
+        
+        float t = dt+iTime;
+				vec4 c = vec4(1,2,3,0);
+				o += .1*smoothstep(.03*c, c-c, vec4(length(P((t))-U)));
+				c = vec4(3,2,1,0);
+				o += .1*smoothstep(.03*c, c-c, vec4(length(P((t-1234))-U)));
+				c = vec4(2,3,1,0);
+				o += .1*smoothstep(.03*c, c-c, vec4(length(P((t+1234))-U)));
+    }
+    return o;
+}
