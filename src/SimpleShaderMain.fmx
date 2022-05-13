@@ -138,9 +138,9 @@ object frmShaderView: TfrmShaderView
     Anchors = [akRight, akBottom]
     Fill.Color = claWhite
     Opacity = 0.500000000000000000
-    Position.X = 564.000000000000000000
+    Position.X = 568.000000000000000000
     Position.Y = 472.000000000000000000
-    Size.Width = 70.000000000000000000
+    Size.Width = 65.000000000000000000
     Size.Height = 21.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
@@ -148,13 +148,13 @@ object frmShaderView: TfrmShaderView
     object LabelFPS: TSkLabel
       Align = Client
       Margins.Right = 2.000000000000000000
-      Size.Width = 68.000000000000000000
+      Size.Width = 63.000000000000000000
       Size.Height = 21.000000000000000000
       Size.PlatformDefault = False
       AutoSize = False
       StyledSettings = [Family, Size, FontColor]
       TextSettings.Font.Weight = Bold
-      TextSettings.HorzAlign = Trailing
+      TextSettings.HorzAlign = Center
       Words = <
         item
           Text = '000.0 fps'

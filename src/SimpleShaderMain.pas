@@ -51,7 +51,6 @@ type
   private
     { Private declarations }
     FEffect: ISkRuntimeEffect;
-    FShader: ISkShader;
     FPaint: ISkPaint;
     FPaintCount: Int64;
     FstopWatch: TDateTime;
@@ -240,7 +239,6 @@ begin
   begin
     Close;
   end;
-
 end;
 
 procedure TfrmShaderView.Splitter1DblClick(Sender: TObject);
