@@ -1,0 +1,16 @@
+uniform float3 iResolution;      // Viewport resolution (pixels)
+uniform float  iTime;            // Shader playback time (s)
+
+// This is the default starting shader from https://www.shadertoy.com/new
+
+vec4 main( in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = fragCoord/iResolution.xy;
+
+    // Time varying pixel color
+    vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+
+    // Output to screen
+    return vec4(col,1.0);
+} 
