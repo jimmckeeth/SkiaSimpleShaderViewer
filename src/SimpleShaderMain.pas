@@ -89,6 +89,26 @@ begin
     Result := Result + PathDelim;
 end;
 
+function MediaPath: string;
+begin
+  {$IFDEF MSWINDOWS}
+  Result := TPath.GetFullPath('..\..\..\media\');
+  {$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
+  Result := TPath.Combine(TPath.GetDocumentsPath, 'media');
+  {$ELSEIF defined(MACOS)}
+  Result := TPath.Combine(TPath.GetFullPath('../Resources/'), 'media');
+  {$ELSE}
+  Result := TPath.Combine(ExtractFilePath(ParamStr(0)), 'media');
+  {$ENDIF}
+  if (Result <> '') and not Result.EndsWith(PathDelim) then
+    Result := Result + PathDelim;
+end;
+
+function MediaTexturesPath: string;
+begin
+  Result := TPath.Combine(MediaPath, 'textures');
+end;
+
 procedure TfrmShaderView.RunShader;
 begin
   SkAnimatedPaintBox1.Enabled := False;
@@ -102,7 +122,7 @@ begin
   if FEffect.ChildExists('iImage1') then
   begin
     var image1: ISkImage := TSkImage.MakeFromEncodedFile(
-      '..\..\..\media\cubemaps\cubemap4\488bd40303a2e2b9a71987e48c66ef41f5e937174bf316d3ed0e86410784b919_5.jpg');
+      TPath.Combine(MediaTexturesPath, '8de3a3924cb95bd0e95a443fff0326c869f9d4979cd1d5b6e94e2a01f5be53e9.jpg'));
 
     if Assigned(image1) then
     begin

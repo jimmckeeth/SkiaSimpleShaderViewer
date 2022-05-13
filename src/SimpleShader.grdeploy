@@ -6,6 +6,12 @@
       "Configurations" : [],
       "IsDirectory" : true,
       "IncludeSubDirectories" : false
+    }, {
+      "LocalName" : "..\\media",
+      "RemoteDir" : "StartUp\\Documents\\media\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : true
     }],
   "Android" : [{
       "LocalName" : "..\\shaders",
@@ -13,6 +19,12 @@
       "Configurations" : [],
       "IsDirectory" : true,
       "IncludeSubDirectories" : false
+    }, {
+      "LocalName" : "..\\media",
+      "RemoteDir" : "assets\\internal\\media",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : true
     }],
   "MacOS" : [{
       "LocalName" : "..\\shaders",
@@ -20,6 +32,12 @@
       "Configurations" : [],
       "IsDirectory" : true,
       "IncludeSubDirectories" : false
+    }, {
+      "LocalName" : "..\\media",
+      "RemoteDir" : "Contents\\Resources\\media\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : true
     }],
   "Linux" : [{
       "LocalName" : "..\\shaders",
@@ -27,5 +45,11 @@
       "Configurations" : [],
       "IsDirectory" : true,
       "IncludeSubDirectories" : false
+    }, {
+      "LocalName" : "..\\media",
+      "RemoteDir" : ".\\media\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : true
     }]
 }
