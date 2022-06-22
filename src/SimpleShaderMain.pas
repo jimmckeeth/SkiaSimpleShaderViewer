@@ -130,9 +130,13 @@ begin
       if FEffect.UniformExists('iImage1Resolution') then
         case FEffect.UniformType['iImage1Resolution'] of
           TSkRuntimeEffectUniformType.Float2:
-              FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectFloat2.Create(image1.Width, image1.Height));
           TSkRuntimeEffectUniformType.Float3:
-              FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
+            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectFloat3.Create(image1.Width, image1.Height, 0));
+          TSkRuntimeEffectUniformType.Int2:
+            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectInt2.Create(image1.Width, image1.Height));
+          TSkRuntimeEffectUniformType.Int3:
+            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectInt3.Create(image1.Width, image1.Height, 0));
         end;
     end;
   end;
