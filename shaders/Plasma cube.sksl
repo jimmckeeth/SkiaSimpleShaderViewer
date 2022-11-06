@@ -1,7 +1,7 @@
 uniform float iTime;
 uniform float2 iResolution;
 
-// Plasma cube 
+// Plasma cube
 // Created by patu in 2016-03-13
 // https://www.shadertoy.com/view/4d3SRN
 
@@ -24,7 +24,7 @@ mat3 rotationZ(float k) {
         vec3(cos(k), -sin(k), 0.0),
         vec3(sin(k), cos(k), 0.0),
         vec3(0.0, 0.0, 1.0)
-    );  
+    );
 }
     
     
@@ -32,13 +32,13 @@ mat3 rotationX (float k) {
     return  mat3( // rotationX matrix;
         vec3(1.0, 0.0, 0.0),
         vec3(0.0, cos(k * 1.2), -sin(k * 1.2)),
-        vec3(0.0, sin(k * 1.2), cos(k * 1.2))        
-    ); 
+        vec3(0.0, sin(k * 1.2), cos(k * 1.2))
+    );
 }
 
 vec4 cubePlasma (vec2 coord, vec3 p) {
     
-    float 
+    float
         k = iTime * 3.0,
         as = 4.78207464329,
     	fd = 12.18910931609,
@@ -49,7 +49,7 @@ vec4 cubePlasma (vec2 coord, vec3 p) {
     	p1 = sin(k / ps) * 4.0,
     	p2 = sin(k / fd) * 3.0,
     	t3 = sin(k / fd2) + cos(as1),
-        t4 = sin(k / ps);    
+        t4 = sin(k / ps);
     
     coord.x = floor(coord.x * 16.0) / 16.0;
     coord.y = floor(coord.y * 16.0) / 16.0;
@@ -57,16 +57,16 @@ vec4 cubePlasma (vec2 coord, vec3 p) {
     float x = sin(p1 + coord.x) * sin(p2 + coord.y) + sin(t3 + coord.x) * sin(t4 + coord.y) * -p.x;
     
     float r = (0.87 + sin((x / as1 ) / 8.0) + sin(x / as1)) / 2.0;
-    float g = (0.42 + sin(x / as1)) / 2.0; 
+    float g = (0.42 + sin(x / as1)) / 2.0;
     float b = (0.77 + sin(x / as1 )) + sin(coord.y / as1) / 14.0;
 
     if (
         coord.y <= -0.9 || coord.y >= 0.9 ||
-        coord.x <= -0.9 || coord.x >= 0.9    
-    ) { 
-        r += 2.;  
-        b += 2.; 
-        g += 2.; 
+        coord.x <= -0.9 || coord.x >= 0.9
+    ) {
+        r += 2.;
+        b += 2.;
+        g += 2.;
     }
     
   
@@ -96,13 +96,13 @@ vec4 main( in vec2 fragCoord ) {
     vec2 vPos = fragCoord.xy/iResolution.xy - 0.5;
     vec2 ovPos = vPos;
     
-    vec2 d = vec2(0.5, 0.0);    
+    vec2 d = vec2(0.5, 0.0);
     
     fragColor = vec4(0.0);
     
-  	vec3 c, p, N, vuv, vrp, prp;    
+  	vec3 c, p, N, vuv, vrp, prp;
         
-    float 
+    float
         k = iTime,
     	f = 1.0, // ray start
     	mx,
@@ -115,7 +115,7 @@ vec4 main( in vec2 fragCoord ) {
     vPos.x += sin(vPos.y * 2. + k) / 48.;
 	
     // Camera setup.
-    vuv = vec3(0, -1., 0.); 
+    vuv = vec3(0, -1., 0.);
     prp = vec3(3.
         //sin(k) * 6.3,
         //sin(k) * 5.2,
@@ -135,12 +135,12 @@ vec4 main( in vec2 fragCoord ) {
 
     // Raymarching.
     float minDist = 140.;
-    for (int i = 0; i < 32; i++) {	
+    for (int i = 0; i < 32; i++) {
       
         if ((abs(d.x) < .01) || (f > maxd)) break;
    
         f += d.x;
-        p = prp + scp * f;    
+        p = prp + scp * f;
         p = p * rotationZ(k) * rotationX(k);
         d = distance_to_obj(p);
         if (i < 6) {
@@ -148,7 +148,7 @@ vec4 main( in vec2 fragCoord ) {
         }
         //minDist += min(minDist, d.x * 3.) / 2.;
         if (i < 6) glow = pow( 1. / minDist, 0.8);
-    }  
+    }
   
     if (f < maxd){
 
@@ -171,6 +171,6 @@ vec4 main( in vec2 fragCoord ) {
         
         fragColor = vec4(vec3(normalize(scp) / 2.), 0.) + glow;
     }
-    return fragColor;
-}	 
+    return vec4(fragColor.rgb, 1);
+}
  				    

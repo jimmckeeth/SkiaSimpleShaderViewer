@@ -28,5 +28,5 @@ vec4 main( vec2 fragCoord ) {
 	p += .2 * vec3(sin(iTime / 16.), sin(iTime / 12.),  sin(iTime / 128.));
 	float t = field(p);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
-	return(mix(.4, 1., v) * vec4(1.8 * t * t * t, 1.4 * t * t, t, 1.0));
+	return vec4((mix(.4, 1., v) * vec3(1.8 * t * t * t, 1.4 * t * t, t)).rgb, 1);
 }

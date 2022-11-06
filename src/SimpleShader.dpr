@@ -14,11 +14,11 @@ uses
 begin
   GlobalUseSkia := True;
 
-  //For macOS/iOS
+  // To use Skia's Metal backend in macOS/iOS and improve performance
   GlobalUseMetal := True;
 
-  // GPU is priorty everywhere but Windows,
-  // this line improves Windows shader performance
+  // GPU is priorty in all platform except in Windows, but adding this
+  // line will force GPU backend and improves Windows shader performance
   GlobalUseSkiaRasterWhenAvailable := False;
 
   Application.Initialize;

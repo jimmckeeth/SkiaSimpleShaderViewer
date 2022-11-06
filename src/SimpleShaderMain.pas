@@ -111,7 +111,7 @@ end;
 
 procedure TfrmShaderView.RunShader;
 begin
-  SkAnimatedPaintBox1.Enabled := False;
+  SkAnimatedPaintBox1.Animation.StopAtCurrent;
   FEffect := nil;
   FPaint := nil;
   var AErrorText := '';
@@ -126,24 +126,22 @@ begin
 
     if Assigned(image1) then
     begin
-      FEffect.ChildrenShaders['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
+      FEffect.ChildrenShadersByName['iImage1'] := image1.MakeShader(TSKSamplingOptions.High);
       if FEffect.UniformExists('iImage1Resolution') then
-        case FEffect.UniformType['iImage1Resolution'] of
-          TSkRuntimeEffectUniformType.Float2:
-            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectFloat2.Create(image1.Width, image1.Height));
-          TSkRuntimeEffectUniformType.Float3:
-            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectFloat3.Create(image1.Width, image1.Height, 0));
+        case FEffect.UniformTypeByName['iImage1Resolution'] of
+          TSkRuntimeEffectUniformType.Float2,
           TSkRuntimeEffectUniformType.Int2:
-            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectInt2.Create(image1.Width, image1.Height));
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height]);
+          TSkRuntimeEffectUniformType.Float3,
           TSkRuntimeEffectUniformType.Int3:
-            FEffect.SetUniform('iImage1Resolution', TSkRuntimeEffectInt3.Create(image1.Width, image1.Height, 0));
+            FEffect.SetUniform('iImage1Resolution', [image1.Width, image1.Height, 0]);
         end;
     end;
   end;
 
   FPaint := TSkPaint.Create;
-  FPaint.Shader := FEffect.MakeShader(True);
-  SkAnimatedPaintBox1.Enabled := True;
+  FPaint.Shader := FEffect.MakeShader;
+  SkAnimatedPaintBox1.Animation.Start;
 end;
 
 procedure TfrmShaderView.SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
@@ -154,13 +152,13 @@ begin
   begin
     if FEffect.UniformExists('iResolution') then
     begin
-      if FEffect.UniformType['iResolution'] = TSkRuntimeEffectUniformType.Float3 then
+      if FEffect.UniformTypeByName['iResolution'] in [TSkRuntimeEffectUniformType.Float3, TSkRuntimeEffectUniformType.Int3] then
         FEffect.SetUniform('iResolution', [ADest.Width, ADest.Height, 0])
       else
-        FEffect.SetUniform('iResolution', PointF(ADest.Width, ADest.Height));
+        FEffect.SetUniform('iResolution', [ADest.Width, ADest.Height]);
     end;
     if FEffect.UniformExists('iTime') then
-      FEffect.SetUniform('iTime', AProgress * SkAnimatedPaintBox1.Duration );
+      FEffect.SetUniform('iTime', AProgress * SkAnimatedPaintBox1.Animation.Duration);
     ACanvas.DrawRect(ADest, FPaint);
   end;
 end;

@@ -13,13 +13,13 @@ object frmShaderView: TfrmShaderView
   DesignerMasterStyle = 0
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
-    Enabled = False
     HitTest = True
     Size.Width = 636.000000000000000000
     Size.Height = 496.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
-    Duration = 100000.000000000000000000
+    Animation.Duration = 100000.000000000000000000
+    Animation.Enabled = False
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
   end
   object SpeedButton1: TSpeedButton

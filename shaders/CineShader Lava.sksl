@@ -2,7 +2,7 @@ uniform float iTime;
 uniform float2 iResolution;
 uniform float4 iMouse;
 
-// CineShader Lava 
+// CineShader Lava
 // Created by edankwan in 2019-11-21
 // https://www.shadertoy.com/view/3sySRK
 
@@ -15,7 +15,7 @@ float opSmoothUnion( float d1, float d2, float k )
 float sdSphere( vec3 p, float s )
 {
   return length(p)-s;
-} 
+}
 
 float map(vec3 p)
 {
@@ -36,9 +36,9 @@ vec3 calcNormal( in vec3 p )
 {
     const float h = 1e-5; // or some other value
     const vec2 k = vec2(1,-1);
-    return normalize( k.xyy*map( p + k.xyy*h ) + 
-                      k.yyx*map( p + k.yyx*h ) + 
-                      k.yxy*map( p + k.yxy*h ) + 
+    return normalize( k.xyy*map( p + k.xyy*h ) +
+                      k.yyx*map( p + k.yyx*h ) +
+                      k.yxy*map( p + k.yxy*h ) +
                       k.xxx*map( p + k.xxx*h ) );
 }
 
@@ -69,5 +69,5 @@ vec4 main( in vec2 fragCoord )
     col *= exp( -depth * 0.15 );
 	
     // maximum thickness is 2m in alpha channel
-    return( vec4(col, 1.0 - (depth - 0.5) / 2.0));
+    return vec4(col, 1);
 }

@@ -9,4 +9,4 @@ Includes a selection of [Shaders](/shaders/) I adapted from [ShaderToy](https://
 I've included some [screenshots](screenshots/readme.md) of the different shaders.    
 [<img src="screenshots/SimpleShader_seascape.png" width="320">](screenshots/readme.md)
 
-Build with [Delphi 11.1 Alexandria](https://www.embarcadero.com/products/delphi) and [Skia4Delphi 3.4](https://github.com/skia4delphi/skia4delphi)
+Build with [Delphi 11.2 Alexandria](https://www.embarcadero.com/products/delphi) and [Skia4Delphi 4.0](https://github.com/skia4delphi/skia4delphi)
