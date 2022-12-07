@@ -5,8 +5,8 @@ program SimpleShader;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  FMX.Types,
   Skia.FMX,
+  FMX.Types,
   SimpleShaderMain in 'SimpleShaderMain.pas' {frmShaderView};
 
 {$R *.res}

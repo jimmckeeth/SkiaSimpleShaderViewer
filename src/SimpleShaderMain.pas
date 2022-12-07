@@ -84,7 +84,7 @@ const
 function ShaderPath: string;
 begin
   {$IFDEF MSWINDOWS}
-  Result := TPath.GetFullPath('..\..\..\Shaders\');
+  Result := TPath.GetFullPath('..\..\..\shaders\');
   {$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
   Result := TPath.GetDocumentsPath;
   {$ELSEIF defined(MACOS)}
@@ -223,6 +223,7 @@ begin
     else
       lbShaders.ItemIndex := Pred(lbShaders.Items.Count);
     LoadSelectedShader;
+    key := 0;
   end;
   if key = vkRight then
   begin
@@ -230,7 +231,8 @@ begin
       lbShaders.ItemIndex := Succ(lbShaders.ItemIndex)
     else
       lbShaders.ItemIndex := 0;
-    LoadSelectedShader
+    LoadSelectedShader;
+    key := 0;
   end;
   if keyChar = #32 then
   begin
@@ -246,9 +248,9 @@ begin
   if KeyChar = '?' then
   begin
     if Trunc(RectangleKeys.Opacity * 10) = 0 then
-      RectangleKeys.AnimateFloat('Opacity',0.5,1)
+      TAnimator.AnimateFloat(RectangleKeys, 'Opacity',0.5,1)
     else
-      RectangleKeys.AnimateFloat('Opacity',0,1);
+      TAnimator.AnimateFloat(RectangleKeys, 'Opacity',0,1);
   end;
   if UpCase(KeyChar) = 'M' then
     ckMouse.IsChecked := not ckMouse.IsChecked;
@@ -257,11 +259,9 @@ begin
   if UpCase(KeyChar) = 'L' then
   begin
     if Trunc(SkSvg1.Opacity * 10) = 0 then
-      SkSvg1.AnimateFloat('Opacity',1,1)
+      TAnimator.AnimateFloat(SkSvg1, 'Opacity',1,1)
     else
-      SkSvg1.AnimateFloat('Opacity',0,1);
-
-
+      TAnimator.AnimateFloat(SkSvg1, 'Opacity',0,1);
   end;
 end;
 
