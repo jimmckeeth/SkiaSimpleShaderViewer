@@ -26,11 +26,14 @@ type
     SkSvg1: TSkSvg;
     FloatAnimation1: TFloatAnimation;
     ShadowEffect1: TShadowEffect;
-    Splitter2: TSplitter;
     ckMouse: TCheckBox;
     Button3: TButton;
-    LabelFPS: TSkLabel;
+    Splitter2: TSplitter;
+    RectangleKeys: TRectangle;
+    SkLabel1: TSkLabel;
     RectangleFps: TRectangle;
+    LabelFPS: TSkLabel;
+    AnimateKeys: TFloatAnimation;
     procedure Button1Click(Sender: TObject);
     procedure SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
       const ACanvas: ISkCanvas; const ADest: TRectF;
@@ -48,6 +51,8 @@ type
     procedure lbShadersItemClick(const Sender: TCustomListBox;
       const Item: TListBoxItem);
     procedure RectangleFpsClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
   private
     { Private declarations }
     FEffect: ISkRuntimeEffect;
@@ -59,6 +64,8 @@ type
     procedure LoadShader(const AShaderFile: string);
   public
     { Public declarations }
+    procedure LoadSelectedShader;
+    procedure RandomShader;
   end;
 
 var
@@ -122,7 +129,8 @@ begin
   if FEffect.ChildExists('iImage1') then
   begin
     var image1: ISkImage := TSkImage.MakeFromEncodedFile(
-      TPath.Combine(MediaTexturesPath, '8de3a3924cb95bd0e95a443fff0326c869f9d4979cd1d5b6e94e2a01f5be53e9.jpg'));
+      TPath.Combine(MediaTexturesPath,
+         '8de3a3924cb95bd0e95a443fff0326c869f9d4979cd1d5b6e94e2a01f5be53e9.jpg'));
 
     if Assigned(image1) then
     begin
@@ -152,7 +160,8 @@ begin
   begin
     if FEffect.UniformExists('iResolution') then
     begin
-      if FEffect.UniformTypeByName['iResolution'] in [TSkRuntimeEffectUniformType.Float3, TSkRuntimeEffectUniformType.Int3] then
+      if FEffect.UniformTypeByName['iResolution'] in [TSkRuntimeEffectUniformType.Float3,
+          TSkRuntimeEffectUniformType.Int3] then
         FEffect.SetUniform('iResolution', [ADest.Width, ADest.Height, 0])
       else
         FEffect.SetUniform('iResolution', [ADest.Width, ADest.Height]);
@@ -173,6 +182,11 @@ end;
 procedure TfrmShaderView.Button1Click(Sender: TObject);
 begin
   RunShader;
+end;
+
+procedure TfrmShaderView.LoadSelectedShader;
+begin
+  LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
 end;
 
 procedure TfrmShaderView.LoadShader(const AShaderFile: string);
@@ -196,6 +210,59 @@ procedure TfrmShaderView.FormCreate(Sender: TObject);
 begin
   LoadShaders;
   MultiView1.Mode := TMultiViewMode.Drawer;
+  SkAnimatedPaintBox1.Animation.Duration := MaxSingle;
+end;
+
+procedure TfrmShaderView.FormKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  if key = vkLeft then
+  begin
+    if lbShaders.ItemIndex > 0 then
+      lbShaders.ItemIndex := Pred(lbShaders.ItemIndex)
+    else
+      lbShaders.ItemIndex := Pred(lbShaders.Items.Count);
+    LoadSelectedShader;
+  end;
+  if key = vkRight then
+  begin
+    if lbShaders.ItemIndex < Pred(lbShaders.Items.Count) then
+      lbShaders.ItemIndex := Succ(lbShaders.ItemIndex)
+    else
+      lbShaders.ItemIndex := 0;
+    LoadSelectedShader
+  end;
+  if keyChar = #32 then
+  begin
+    var progress := SkAnimatedPaintBox1.Animation.Progress;
+    if SkAnimatedPaintBox1.Animation.Enabled then
+      SkAnimatedPaintBox1.Animation.Stop
+    else
+      SkAnimatedPaintBox1.Animation.Start;
+    SkAnimatedPaintBox1.Animation.Progress := progress;
+  end;
+  if UpCase(KeyChar) = 'F' then
+    RectangleFps.Visible := not RectangleFps.Visible;
+  if KeyChar = '?' then
+  begin
+    if Trunc(RectangleKeys.Opacity * 10) = 0 then
+      RectangleKeys.AnimateFloat('Opacity',0.5,1)
+    else
+      RectangleKeys.AnimateFloat('Opacity',0,1);
+  end;
+  if UpCase(KeyChar) = 'M' then
+    ckMouse.IsChecked := not ckMouse.IsChecked;
+  if UpCase(KeyChar) = 'R' then
+    RandomShader;
+  if UpCase(KeyChar) = 'L' then
+  begin
+    if Trunc(SkSvg1.Opacity * 10) = 0 then
+      SkSvg1.AnimateFloat('Opacity',1,1)
+    else
+      SkSvg1.AnimateFloat('Opacity',0,1);
+
+
+  end;
 end;
 
 procedure TfrmShaderView.FormPaint(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
@@ -212,7 +279,7 @@ end;
 procedure TfrmShaderView.lbShadersItemClick(const Sender: TCustomListBox;
   const Item: TListBoxItem);
 begin
-  LoadShader(TPath.Combine(ShaderPath,Item.Text+ShaderExt));
+  LoadSelectedShader;
 end;
 
 procedure TfrmShaderView.LoadShaders;
@@ -232,10 +299,15 @@ begin
     end));
   for var shader in Shaders do
     lbShaders.Items.Add(TPath.GetFileNameWithoutExtension(Shader));
+  RandomShader;
+end;
+
+procedure TfrmShaderView.RandomShader;
+begin
   if lbShaders.Count > 0 then
   begin
     lbShaders.ItemIndex := random(lbShaders.Count);
-    LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
+    LoadSelectedShader;
   end;
 end;
 

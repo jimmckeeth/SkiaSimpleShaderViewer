@@ -2,25 +2,93 @@ object frmShaderView: TfrmShaderView
   Left = 0
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
-  ClientHeight = 496
-  ClientWidth = 636
+  ClientHeight = 495
+  ClientWidth = 674
   Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnPaint = FormPaint
   DesignerMasterStyle = 0
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
     HitTest = True
-    Size.Width = 636.000000000000000000
-    Size.Height = 496.000000000000000000
+    Size.Width = 674.000000000000000000
+    Size.Height = 495.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
     Animation.Duration = 100000.000000000000000000
     Animation.Enabled = False
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
+    object RectangleKeys: TRectangle
+      Anchors = [akBottom]
+      Fill.Color = claWhite
+      Opacity = 0.500000000000000000
+      Position.X = 186.000000000000000000
+      Position.Y = 432.000000000000000000
+      Size.Width = 309.000000000000000000
+      Size.Height = 60.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      XRadius = 5.000000000000000000
+      YRadius = 10.000000000000000000
+      OnClick = RectangleFpsClick
+      object SkLabel1: TSkLabel
+        Align = Client
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 2.000000000000000000
+        Size.Width = 307.000000000000000000
+        Size.Height = 58.000000000000000000
+        Size.PlatformDefault = False
+        AutoSize = False
+        StyledSettings = [Family, Size, FontColor]
+        TextSettings.Font.Weight = Bold
+        TextSettings.HorzAlign = Center
+        Words = <
+          item
+            Text = 
+              '[Space] for pause, [Left] & [Right] to cycle'#10'[?] Help, [F]PS, [R' +
+              ']andomize, [L]ogo, [M]ouse'
+          end>
+      end
+      object AnimateKeys: TFloatAnimation
+        Enabled = True
+        Delay = 4.000000000000000000
+        Duration = 1.000000000000000000
+        PropertyName = 'Opacity'
+        StartValue = 0.500000000000000000
+        StopValue = 0.000000000000000000
+      end
+    end
+    object RectangleFps: TRectangle
+      Anchors = [akRight, akBottom]
+      Fill.Color = claWhite
+      Opacity = 0.500000000000000000
+      Position.X = 606.000000000000000000
+      Position.Y = 471.000000000000000000
+      Size.Width = 65.000000000000000000
+      Size.Height = 21.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      OnClick = RectangleFpsClick
+      object LabelFPS: TSkLabel
+        Align = Client
+        Margins.Right = 2.000000000000000000
+        Size.Width = 63.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        AutoSize = False
+        StyledSettings = [Family, Size, FontColor]
+        TextSettings.Font.Weight = Bold
+        TextSettings.HorzAlign = Center
+        Words = <
+          item
+            Text = '000.0 fps'
+          end>
+      end
+    end
   end
   object SpeedButton1: TSpeedButton
     Position.X = 8.000000000000000000
@@ -39,8 +107,8 @@ object frmShaderView: TfrmShaderView
   end
   object SkSvg1: TSkSvg
     Anchors = [akRight, akBottom]
-    Position.X = 412.000000000000000000
-    Position.Y = 364.000000000000000000
+    Position.X = 450.000000000000000000
+    Position.Y = 363.000000000000000000
     Size.Width = 216.000000000000000000
     Size.Height = 104.000000000000000000
     Size.PlatformDefault = False
@@ -134,36 +202,9 @@ object frmShaderView: TfrmShaderView
       ShadowColor = claBlack
     end
   end
-  object RectangleFps: TRectangle
-    Anchors = [akRight, akBottom]
-    Fill.Color = claWhite
-    Opacity = 0.500000000000000000
-    Position.X = 568.000000000000000000
-    Position.Y = 472.000000000000000000
-    Size.Width = 65.000000000000000000
-    Size.Height = 21.000000000000000000
-    Size.PlatformDefault = False
-    Stroke.Kind = None
-    OnClick = RectangleFpsClick
-    object LabelFPS: TSkLabel
-      Align = Client
-      Margins.Right = 2.000000000000000000
-      Size.Width = 63.000000000000000000
-      Size.Height = 21.000000000000000000
-      Size.PlatformDefault = False
-      AutoSize = False
-      StyledSettings = [Family, Size, FontColor]
-      TextSettings.Font.Weight = Bold
-      TextSettings.HorzAlign = Center
-      Words = <
-        item
-          Text = '000.0 fps'
-        end>
-    end
-  end
   object SpeedButton3: TSpeedButton
     Anchors = [akTop, akRight]
-    Position.X = 588.000000000000000000
+    Position.X = 626.000000000000000000
     Position.Y = 8.000000000000000000
     Size.Width = 40.000000000000000000
     Size.Height = 22.000000000000000000
@@ -450,11 +491,11 @@ object frmShaderView: TfrmShaderView
         '}')
       Align = Client
       Size.Width = 240.000000000000000000
-      Size.Height = 183.000000000000000000
+      Size.Height = 182.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       Viewport.Width = 220.000000000000000000
-      Viewport.Height = 163.000000000000000000
+      Viewport.Height = 162.000000000000000000
     end
     object Panel2: TPanel
       Align = Top
@@ -530,7 +571,7 @@ object frmShaderView: TfrmShaderView
       MinSize = 20.000000000000000000
       Position.X = 240.000000000000000000
       Size.Width = 10.000000000000000000
-      Size.Height = 496.000000000000000000
+      Size.Height = 495.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'splitterstyle'
       OnDblClick = Splitter1DblClick
