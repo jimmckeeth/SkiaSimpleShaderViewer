@@ -1,0 +1,54 @@
+uniform float3 	iResolution;      		// Viewport resolution (pixels)
+uniform float3 	iImage1Resolution;		// Styled resolution (pixels)
+uniform shader 	iImage1;          		// An input image.
+uniform float	iTime;					// Frame Timer
+
+const float pi = 3.14159265359;			// Err - Pi
+const float speed = 4;					// Time to complete one animation
+
+// Lunimance adjusted greyscale - halved (looks nicer)
+float3 rgb2grey(float3 rgb){
+	float g = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) * 0.5;
+	return float3(g);
+}
+
+float4 main( in float2 fragCoord ) {
+	// 0 .. 1 Percent Completion - notmal use would be to pass this in as a 0..1 float
+	// Here I'm fudging it to it takes four (const speed) seconds to complete one animation
+	float	fPercentDone = (iTime / speed) - floor(iTime / speed);			
+	
+	float done = ((2 * fPercentDone) - 1) * pi;	// -pi to +pi
+	
+	float2 center = iImage1Resolution.xy / 2;
+	float vscale = iImage1Resolution.y / iResolution.y;
+	float hscale = iImage1Resolution.x / iResolution.x;
+	float fit_scale = max(vscale, hscale);
+	float2 scale_to_fit = float2(fit_scale, fit_scale);
+	float2 im1loc = (fragCoord * scale_to_fit);
+
+	// Clipping - not required if the container is same aspect as image
+	if(any(greaterThan(im1loc, iImage1Resolution.xy))) {
+		return float4(0, 0, 0, 0);
+	}
+	// Clipping - not required if the container is same aspect as image
+	if(any(lessThan(im1loc, float2(0, 0)))) {
+		return float4(0, 0, 0, 0);
+	}
+	
+	float4 styled = iImage1.eval(im1loc);
+	
+	float dy = im1loc.y - center.y;
+	float dx = im1loc.x - center.x;
+	
+	// Changing the signs and swapping the order of dx/dy alter the rotation
+	// and starting position of the 'Clock'. The following are set for a 'Standard Clock'	
+	float angle = atan(-dx, dy);
+
+	// If the progress is too low grey out the pixel
+	if(angle > done) {
+		styled.rgb = rgb2grey(styled.rgb);
+	}	
+	
+	return( styled );
+}
+
