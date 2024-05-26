@@ -1,0 +1,125 @@
+//  Hyperspace Tunnel, with Twirl
+// original https://www.shadertoy.com/view/WdyXDR
+// by blue_max in 2019-11-14
+
+uniform vec2 iResolution;
+uniform float iTime;
+uniform vec4 iMouse;
+
+const float TAU = 6.28318;
+const float period = 1.0; //3.7;
+const float speed = 2.0 / 1.0;
+const float rotation_speed = 2.5 / 1.0;
+const float t2 = 4.0; // Length in seconds of the effect
+const bool WHITEOUT = true; // Set to true for whiteout effect, false for infinite tunnel
+
+// Perlin noise from Dave_Hoskins' https://www.shadertoy.com/view/4dlGW2
+float Hash(in vec2 p, in float scale) {
+    // This is tiling part, adjusts with the scale...
+    p = mod(p, scale);
+    return fract(sin(dot(p, vec2(27.16898, 38.90563))) * 5151.5473453);
+}
+
+float Noise(in vec2 p, in float scale) {
+    vec2 f;
+    p *= scale;
+    f = fract(p);        // Separate integer from fractional
+    
+    p = floor(p);
+    f = f * f * (3.0 - 2.0 * f);    // Cosine interpolation approximation
+    
+    float res = mix(mix(Hash(p, scale),
+                        Hash(p + vec2(1.0, 0.0), scale), f.x),
+                    mix(Hash(p + vec2(0.0, 1.0), scale),
+                        Hash(p + vec2(1.0, 1.0), scale), f.x), f.y);
+    return res;
+}
+
+float fBm(in vec2 p) {
+    float f = 0.0;
+    // Change starting scale to any integer value...
+    float scale = 40.0;
+    p = mod(p, scale);
+    float amp = 0.6;
+    
+    for (int i = 0; i < 5; i++) {
+        f += Noise(p, scale) * amp;
+        amp *= 0.5;
+        // Scale must be multiplied by an integer value...
+        scale *= 2.0;
+    }
+    // Clamp it just in case....
+    return min(f, 1.0);
+}
+
+vec4 main(vec2 fragCoord) {
+    float t = mod(iTime, t2);
+    t = t / t2; // Normalized time
+    
+    vec4 col = vec4(0.0);
+    vec2 q = fragCoord.xy / iResolution.xy;
+    vec2 p = (2.0 * fragCoord.xy - iResolution.xy) / min(iResolution.y, iResolution.x);
+    vec2 mo = (2.0 * iMouse.xy - iResolution.xy) / min(iResolution.x, iResolution.y);
+    p += vec2(0.0, -0.1);
+    
+    float ay = 0.0, ax = 0.0;
+    if (iMouse.z > 0.0) {
+        ay = 3.0 * mo.x;
+        ax = 3.0 * mo.y;
+    }
+    mat3 mY = mat3(
+        cos(ay), 0.0, sin(ay),
+        0.0, 1.0, 0.0,
+        -sin(ay), 0.0, cos(ay)
+    );
+    
+    mat3 mX = mat3(
+        1.0, 0.0, 0.0,
+        0.0, cos(ax), sin(ax),
+        0.0, -sin(ax), cos(ax)
+    );
+    mat3 m = mX * mY;
+    
+    vec3 v = vec3(p, 1.0);
+    v = m * v;
+    float v_xy = length(v.xy);
+    float z = v.z / v_xy;
+    
+    float focal_depth = 0.15;
+    if (WHITEOUT) {
+        focal_depth = mix(0.15, 0.015, smoothstep(0.65, 1.0, t));
+    }
+    
+    vec2 polar;
+    float p_len = length(v.xy);
+    polar.y = z * focal_depth + iTime * speed;
+    float a = atan(v.y, v.x);
+    a -= iTime * rotation_speed;
+    float x = fract(a / TAU);
+    polar.y /= 3.0;
+    polar.x = x * period + polar.y;
+    
+    float val = fBm(polar);
+    col.rgb = vec3(0.15, 0.4, 0.9) * vec3(val) * 1.3;
+    
+    vec3 white = 0.5 * vec3(smoothstep(0.8, 1.0, val));
+    col.rgb += white;
+    
+    float w_total = 0.0, w_out = 0.0;
+    if (WHITEOUT) {
+        float w_in = 0.0;
+        w_in = abs(1.0 - 1.0 * smoothstep(0.0, 0.25, t));
+        w_out = abs(1.0 * smoothstep(0.8, 1.0, t));
+        w_total = max(w_in, w_out);
+    }
+    
+    float disk_size = max(0.025, 0.5 * w_out);
+    float disk_col = exp(-(p_len * 1.5 - disk_size) * 2.0);
+    col.rgb += vec3(disk_col, disk_col, disk_col);
+    
+    if (WHITEOUT) {
+        col.rgb = mix(col.rgb, vec3(1.0), w_total);
+    }
+    
+    return vec4(col.rgb, 1.0);
+}

@@ -2,8 +2,8 @@ object frmShaderView: TfrmShaderView
   Left = 0
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
-  ClientHeight = 495
-  ClientWidth = 674
+  ClientHeight = 702
+  ClientWidth = 708
   Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -15,8 +15,8 @@ object frmShaderView: TfrmShaderView
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Align = Client
     HitTest = True
-    Size.Width = 674.000000000000000000
-    Size.Height = 495.000000000000000000
+    Size.Width = 708.000000000000000000
+    Size.Height = 702.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
     Animation.Duration = 100000.000000000000000000
@@ -26,8 +26,8 @@ object frmShaderView: TfrmShaderView
       Anchors = [akBottom]
       Fill.Color = claWhite
       Opacity = 0.500000000000000000
-      Position.X = 186.000000000000000000
-      Position.Y = 432.000000000000000000
+      Position.X = 203.176559448242200000
+      Position.Y = 639.000000000000000000
       Size.Width = 309.000000000000000000
       Size.Height = 60.000000000000000000
       Size.PlatformDefault = False
@@ -66,8 +66,8 @@ object frmShaderView: TfrmShaderView
       Anchors = [akRight, akBottom]
       Fill.Color = claWhite
       Opacity = 0.500000000000000000
-      Position.X = 606.000000000000000000
-      Position.Y = 471.000000000000000000
+      Position.X = 640.000000000000000000
+      Position.Y = 678.000000000000000000
       Size.Width = 65.000000000000000000
       Size.Height = 21.000000000000000000
       Size.PlatformDefault = False
@@ -98,6 +98,7 @@ object frmShaderView: TfrmShaderView
     Size.PlatformDefault = False
     StyleLookup = 'detailstoolbuttonbordered'
     Text = 'SpeedButton1'
+    TextSettings.Trimming = None
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sksl'
@@ -107,8 +108,8 @@ object frmShaderView: TfrmShaderView
   end
   object SkSvg1: TSkSvg
     Anchors = [akRight, akBottom]
-    Position.X = 450.000000000000000000
-    Position.Y = 363.000000000000000000
+    Position.X = 484.000000000000000000
+    Position.Y = 570.000000000000000000
     Size.Width = 216.000000000000000000
     Size.Height = 104.000000000000000000
     Size.PlatformDefault = False
@@ -204,14 +205,21 @@ object frmShaderView: TfrmShaderView
   end
   object SpeedButton3: TSpeedButton
     Anchors = [akTop, akRight]
-    Position.X = 626.000000000000000000
+    Position.X = 660.000000000000000000
     Position.Y = 8.000000000000000000
     Size.Width = 40.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'escapetoolbutton'
     Text = 'SpeedButton3'
+    TextSettings.Trimming = None
     OnClick = SpeedButton3Click
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'sksl'
+    Filter = 'Skia Shader Language (*.SkSL)|*.sksl|All|*.*'
+    Left = 112
+    Top = 137
   end
   object MultiView1: TMultiView
     MasterButton = SpeedButton1
@@ -491,11 +499,11 @@ object frmShaderView: TfrmShaderView
         '}')
       Align = Client
       Size.Width = 240.000000000000000000
-      Size.Height = 182.000000000000000000
+      Size.Height = 389.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       Viewport.Width = 220.000000000000000000
-      Viewport.Height = 162.000000000000000000
+      Viewport.Height = 369.000000000000000000
     end
     object Panel2: TPanel
       Align = Top
@@ -513,6 +521,7 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'playtoolbutton'
         TabOrder = 0
         Text = 'Run'
+        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button1Click
@@ -527,6 +536,7 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'pagecurltoolbutton'
         TabOrder = 1
         Text = 'Load'
+        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button2Click
@@ -539,12 +549,14 @@ object frmShaderView: TfrmShaderView
         Size.PlatformDefault = False
         StyleLookup = 'detailstoolbuttonbordered'
         Text = 'SpeedButton1'
+        TextSettings.Trimming = None
         OnClick = SpeedButton2Click
       end
       object ckMouse: TCheckBox
         Anchors = [akTop, akRight]
         Hint = 'Interact with Mouse'
         Position.X = 176.000000000000000000
+        Position.Y = 8.000000000000000000
         Size.Width = 64.000000000000000000
         Size.Height = 19.000000000000000000
         Size.PlatformDefault = False
@@ -559,10 +571,11 @@ object frmShaderView: TfrmShaderView
         Size.Width = 24.000000000000000000
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
-        StyleLookup = 'cameratoolbutton'
+        StyleLookup = 'organizetoolbutton'
         TabOrder = 3
         Text = 'Button3'
-        Visible = False
+        TextSettings.Trimming = None
+        OnClick = Button3Click
       end
     end
     object Splitter1: TSplitter
@@ -571,7 +584,7 @@ object frmShaderView: TfrmShaderView
       MinSize = 20.000000000000000000
       Position.X = 240.000000000000000000
       Size.Width = 10.000000000000000000
-      Size.Height = 495.000000000000000000
+      Size.Height = 702.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'splitterstyle'
       OnDblClick = Splitter1DblClick

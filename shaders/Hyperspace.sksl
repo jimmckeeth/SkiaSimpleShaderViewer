@@ -1,0 +1,171 @@
+// Original https://www.shadertoy.com/view/ctKBRK
+// by guvacode in 2023-12-11
+
+uniform float iTime;
+uniform float2 iResolution;
+uniform float4 iMouse;
+
+const float TAU = 6.28318;
+
+// Uncomment the following line to get a flare in the center (Disney-style)
+const bool FLARE = true;
+
+// The way this shader works is by looking at the screen as if it were a disk and then
+// this disk is split into a number of slices centered at the origin. Each slice renders
+// a single trail. So this setting controls the overall density of the effect:
+const float NUM_SLICES = 125.0;
+//const float NUM_SLICES = 50.0;
+
+// Each trail is rendered within its slice; but to avoid generating regular patterns, we
+// randomly offset the trail from the center of the slice by this amount:
+const float MAX_SLICE_OFFSET = 0.4;
+
+// This is the length of the effect in seconds:
+const float T_MAX = 2.0;
+// T_JUMP is in normalized [0..1] time: this is the time when the 
+// trails zoom out of view because we've jumped into hyperspace:
+const float T_JUMP = 0.75;
+// This is the speed during the final jump:
+const float jump_speed = 15.0;
+
+// I've noticed that the effect tends to have a bluish tint. In this 
+// shader, the blue color is towards the start of the trail, and the 
+// white color towards the end:
+const vec3 blue_col = vec3(0.3, 0.3, 0.5);
+const vec3 white_col = vec3(0.85, 0.85, 0.9);
+const vec3 flare_col = vec3(0.9, 0.9, 1.4);
+
+float array_mix(float array0, float array1, float array2, float array3, int n, float index) {
+    float dec = fract(index);
+    int i = int(floor(index));
+    if (i >= n - 1)
+        return (n == 1) ? array0 : (n == 2) ? array1 : (n == 3) ? array2 : array3;
+    else if (i == 0)
+        return mix(array0, array1, dec);
+    else if (i == 1)
+        return mix(array1, array2, dec);
+    else
+        return mix(array2, array3, dec);
+}
+
+float sdLine(vec2 p, vec2 a, vec2 b, float ring) {
+    vec2 pa = p - a, ba = b - a;
+    float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+    return length(pa - ba * h) - ring;
+}
+
+float rand(vec2 co) {
+    return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+vec3 lensflare(vec3 uv, vec3 pos, float flare_size, float ang_offset) {
+    float z = uv.z / length(uv.xy);
+    vec2 main = uv.xy - pos.xy;
+    float dist = length(main);
+    float num_points = 2.71;
+    float disk_size = 0.2;
+    float inv_size = 1.0 / flare_size;
+    float ang = atan(main.y, main.x) + ang_offset;
+    float fade = (z < 0.0) ? -z : 1.0;
+
+    float f0 = 1.0 / (dist * inv_size + 1.0);
+    f0 = f0 + f0 * (0.1 * sin((sin(ang * 2.0 + pos.x) * 4.0 - cos(ang * 3.0 + pos.y)) * num_points) + disk_size);
+    if (z < 0.0)
+        return clamp(mix(vec3(f0), vec3(0.0), 0.75 * fade), 0.0, 1.0);
+    else
+        return vec3(f0);
+}
+
+vec3 cc(vec3 color, float factor, float factor2) {
+    float w = color.x + color.y + color.z;
+    return mix(color, vec3(w) * factor, w * factor2);
+}
+
+vec4 main(vec2 fragCoord) {
+  
+    vec3 color = vec3(0.0);
+    float time = mod(iTime, T_MAX);
+    float t = time / T_MAX;
+    vec2 p = (2.0 * fragCoord - iResolution) / min(iResolution.x, iResolution.y);
+    vec2 mo = (2.0 * iMouse.xy - iResolution) / min(iResolution.x, iResolution.y);
+    p += vec2(0, -0.2);
+
+    float ta = TAU * mod(iTime, 8.0) / 8.0;
+
+    float ay = 0.0, ax = 0.0;
+    if (iMouse.z > 0.0) {
+        ay = 3.0 * mo.x;
+        ax = 3.0 * mo.y;
+    }
+    mat3 mY = mat3(
+         cos(ay), 0.0,  sin(ay),
+         0.0,     1.0,      0.0,
+        -sin(ay), 0.0,  cos(ay)
+    );
+
+    mat3 mX = mat3(
+        1.0,      0.0,     0.0,
+        0.0,  cos(ax), sin(ax),
+        0.0, -sin(ax), cos(ax)
+    );
+
+    mat3 m = mX * mY;
+
+    float p_len = length(p);
+    vec3 v = vec3(p, 1.0);
+    v = m * v;
+
+    float trail_start, trail_end;
+    float fade = clamp(mix(0.1, 1.1, t * 2.0), 0.0, 2.0);
+
+    for (float i = 0.0; i < 80.0; i++) {
+        vec3 trail_color = vec3(0.0);
+        float angle = atan(v.y, v.x) / 3.141592 / 2.0 + 0.13 * i;
+
+        float slice = floor(angle * NUM_SLICES);
+        float slice_fract = fract(angle * NUM_SLICES);
+
+        float slice_offset = MAX_SLICE_OFFSET * rand(vec2(slice, 4.0 + i * 25.0)) - (MAX_SLICE_OFFSET / 2.0);
+
+        float dist = 10.0 * rand(vec2(slice, 1.0 + i * 10.0)) - 5.0;
+        float z = dist * v.z / length(vec2(v.x, v.y)); // Corrected type mismatch
+        float f = sign(dist);
+        if (f == 0.0) f = 1.0;
+        float fspeed = f * (0.1 * rand(vec2(slice, 1.0 + i * 10.0)) + i * 0.01);
+        float fjump_speed = f * jump_speed;
+
+        trail_start = 10.0 * rand(vec2(slice, 0.0 + i * 10.0)) - 5.0;
+
+        trail_start -= mix(0.0, fjump_speed, smoothstep(T_JUMP, 1.0, t));
+        trail_end = trail_start - t * fspeed;
+
+        float trail_x = smoothstep(trail_start, trail_end, z);
+        trail_color = mix(blue_col, white_col, trail_x);
+
+        float h = sdLine(
+            vec2(slice_fract + slice_offset, z),
+            vec2(0.5, trail_start), 
+            vec2(0.5, trail_end),
+            mix(0.0, 0.015, t * z)
+        );
+
+        float threshold = 0.09;
+        h = (h < 0.01) ? 1.0 : 0.85 * smoothstep(threshold, 0.0, abs(h));
+
+        trail_color *= fade * h;
+
+        color = max(color, trail_color);
+    }
+
+    if (FLARE) {
+        float flare_size = mix(0.0, 0.1, smoothstep(0.35, T_JUMP + 0.2, t));
+        flare_size += mix(0.0, 20.0, smoothstep(T_JUMP + 0.05, 1.0, t));
+        vec3 flare = flare_col * lensflare(v, vec3(0.0), flare_size, ta);
+        color += cc(flare, 0.5, 0.1);
+        color += mix(0.0, 1.0, smoothstep(T_JUMP + 0.1, 1.0, t));
+    } else {
+        color += mix(0.0, 1.0, smoothstep(T_JUMP - 0.0, 1.0, t));
+    }
+
+    return vec4(color, 1.0);
+}

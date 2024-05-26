@@ -2,10 +2,10 @@
     <PropertyGroup>
         <Base>True</Base>
         <AppType>Application</AppType>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <FrameworkType>FMX</FrameworkType>
         <MainSource>SimpleShader.dpr</MainSource>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <ProjectGuid>{BDF9CDE3-04BF-4837-B071-AD04D279C6B0}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">SimpleShader</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>

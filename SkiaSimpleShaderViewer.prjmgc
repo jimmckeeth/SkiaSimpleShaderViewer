@@ -11,4 +11,5 @@ RefreshFormType=0
 RemoveExcludedPackages=0
 RemoveDeployment=0
 RemoveUWP=0
+RemoveExplicits=0
 

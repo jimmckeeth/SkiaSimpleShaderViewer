@@ -34,6 +34,7 @@ type
     RectangleFps: TRectangle;
     LabelFPS: TSkLabel;
     AnimateKeys: TFloatAnimation;
+    SaveDialog1: TSaveDialog;
     procedure Button1Click(Sender: TObject);
     procedure SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
       const ACanvas: ISkCanvas; const ADest: TRectF;
@@ -54,6 +55,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
     procedure SkAnimatedPaintBox1Resize(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     FShaderBuilder: ISkRuntimeShaderBuilder;
@@ -187,7 +189,7 @@ end;
 
 procedure TfrmShaderView.SkAnimatedPaintBox1Resize(Sender: TObject);
 begin
-  FPaintCount := 0;  //SZ: reset the fps counter after resizing the form
+  FPaintCount := 0;  // reset the fps counter after resizing the form
 end;
 
 procedure TfrmShaderView.Button1Click(Sender: TObject);
@@ -214,6 +216,14 @@ begin
   if OpenDialog1.Execute then
   begin
     LoadShader(OpenDialog1.FileName);
+  end;
+end;
+
+procedure TfrmShaderView.Button3Click(Sender: TObject);
+begin
+  if SaveDialog1.Execute then
+  begin
+    Memo1.Lines.SaveToFile(SaveDialog1.FileName);
   end;
 end;
 
