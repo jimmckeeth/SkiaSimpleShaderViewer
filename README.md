@@ -16,4 +16,4 @@ Check out the [screenshots](screenshots/readme.md) to preview some different sha
 
 ![Seascape](screenshots/SimpleShader_seascape.png)
 
-Build with [Delphi 11.2 Alexandria](https://www.embarcadero.com/products/delphi) and [Skia4Delphi 4.0](https://github.com/skia4delphi/skia4delphi)
+Built with [Delphi 12 Athens](https://www.embarcadero.com/products/delphi) and [Skia4Delphi](https://github.com/skia4delphi/skia4delphi)
