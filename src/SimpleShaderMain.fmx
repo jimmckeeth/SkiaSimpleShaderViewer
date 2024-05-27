@@ -19,6 +19,7 @@ object frmShaderView: TfrmShaderView
     Size.Height = 702.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
+    OnResize = SkAnimatedPaintBox1Resize
     Animation.Duration = 100000.000000000000000000
     Animation.Enabled = False
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
