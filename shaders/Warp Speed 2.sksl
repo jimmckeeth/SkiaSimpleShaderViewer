@@ -1,0 +1,31 @@
+// Warp Speed 2
+// Original https://www.shadertoy.com/view/4tjSDt
+// Created by Dave_Hoskins in 2015-11-12
+// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+
+uniform vec2 iResolution;
+uniform float iTime;
+
+vec4 main(vec2 fragCoord) {
+    float s = 0.0, v = 0.0;
+    vec2 uv = (fragCoord / iResolution.xy) * 2.0 - 1.0;
+    float time = (iTime - 2.0) * 58.0;
+    vec3 col = vec3(0.0);
+    vec3 init = vec3(sin(time * 0.0032) * 0.3, 0.35 - cos(time * 0.005) * 0.3, time * 0.002);
+    
+    for (int r = 0; r < 100; r++) {
+        vec3 p = init + s * vec3(uv, 0.05);
+        p.z = fract(p.z);
+        
+        // Thanks to Kali's little chaotic loop...
+        for (int i = 0; i < 10; i++) {
+            p = abs(p * 2.04) / dot(p, p) - 0.9;
+        }
+        
+        v += pow(dot(p, p), 0.7) * 0.06;
+        col += vec3(v * 0.2 + 0.4, 12.0 - s * 2.0, 0.1 + v * 1.0) * v * 0.00003;
+        s += 0.025;
+    }
+    
+    return vec4(clamp(col, 0.0, 1.0), 1.0);
+}
