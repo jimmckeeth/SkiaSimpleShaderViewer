@@ -19,6 +19,7 @@ object frmShaderView: TfrmShaderView
     Size.Height = 495.000000000000000000
     Size.PlatformDefault = False
     OnMouseMove = SkAnimatedPaintBox1MouseMove
+    OnResize = SkAnimatedPaintBox1Resize
     Animation.Duration = 100000.000000000000000000
     Animation.Enabled = False
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
@@ -98,6 +99,7 @@ object frmShaderView: TfrmShaderView
     Size.PlatformDefault = False
     StyleLookup = 'detailstoolbuttonbordered'
     Text = 'SpeedButton1'
+    TextSettings.Trimming = None
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sksl'
@@ -211,6 +213,7 @@ object frmShaderView: TfrmShaderView
     Size.PlatformDefault = False
     StyleLookup = 'escapetoolbutton'
     Text = 'SpeedButton3'
+    TextSettings.Trimming = None
     OnClick = SpeedButton3Click
   end
   object MultiView1: TMultiView
@@ -513,6 +516,7 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'playtoolbutton'
         TabOrder = 0
         Text = 'Run'
+        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button1Click
@@ -527,6 +531,7 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'pagecurltoolbutton'
         TabOrder = 1
         Text = 'Load'
+        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button2Click
@@ -539,6 +544,7 @@ object frmShaderView: TfrmShaderView
         Size.PlatformDefault = False
         StyleLookup = 'detailstoolbuttonbordered'
         Text = 'SpeedButton1'
+        TextSettings.Trimming = None
         OnClick = SpeedButton2Click
       end
       object ckMouse: TCheckBox
@@ -562,6 +568,7 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'cameratoolbutton'
         TabOrder = 3
         Text = 'Button3'
+        TextSettings.Trimming = None
         Visible = False
       end
     end
