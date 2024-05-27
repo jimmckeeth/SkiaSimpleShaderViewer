@@ -567,6 +567,7 @@ object frmShaderView: TfrmShaderView
         ShowHint = True
       end
       object Button3: TButton
+        Hint = 'Save As...'
         Position.X = 113.000000000000000000
         Position.Y = 8.000000000000000000
         Size.Width = 24.000000000000000000
