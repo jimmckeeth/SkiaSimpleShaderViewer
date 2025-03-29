@@ -1,0 +1,207 @@
+// kind=shader
+uniform float3 iResolution;      // Viewport resolution (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float3 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // An input image.
+
+// Adapted from
+// https://www.shadertoy.com/view/tXs3Dn
+// Created by nayk in 2025-03-25
+
+// source https://www.shadertoy.com/view/XlfGRj# https://www.shadertoy.com/view/M3VBzc
+
+// Star Nest by Pablo Roman Andrioli
+// License: MIT
+const int iterations = 18;
+const float formuparam = 0.53;
+
+const int volsteps = 20;
+const float stepsize = 0.1;
+
+const float zoom = 0.800;
+const float tile = 0.850;
+const float speed = 0.000;
+
+const float brightness = 0.0015;
+const float darkmatter = 0.300;
+const float distfading = 0.730;
+const float saturation = 0.850;
+
+// Simple 2D pseudo-random function
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+const float innerRad = 0.0025;
+mat2 rot(float t)
+{
+    float c = cos(t), s = sin(t);
+    return mat2(c, -s, s, c);
+}
+
+// Simple noise function
+float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+    
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    // Smooth interpolation
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    
+    // Mix 4 corners
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
+float hash13(vec3 p3)
+{
+	p3  = fract(p3 * .1031);
+    p3 += dot(p3, p3.zyx + 31.32);
+    return fract((p3.x + p3.y) * p3.z);
+}
+
+float int1(float a, float b, float t)
+{
+    return mix(a, b, smoothstep(0., 1., t));
+}
+
+float myint4(float4 v, float2 p)
+{
+    return int1(int1(v.x, v.y, p.x), int1(v.z, v.w, p.x), p.y);
+}
+
+float smValNoise(vec2 p, float seed)
+{
+    vec2 pFl = floor(p);
+    vec4 v;
+    v.x = hash13(vec3(pFl + vec2(0, 0), seed));
+    v.y = hash13(vec3(pFl + vec2(1, 0), seed));
+    v.z = hash13(vec3(pFl + vec2(0, 1), seed));
+    v.w = hash13(vec3(pFl + vec2(1, 1), seed));
+    return myint4(v, p - pFl);
+}
+
+float fbm4(vec2 p, float seed)
+{
+    float sc = 2.;
+    float val;
+
+    for(int i = 0; i < 4; i++)
+    {
+        val += smValNoise(p * sc, seed + float(i)) / sc;
+        sc *= 2.;
+    }
+    return val;
+}
+
+float fbm8(vec2 p, float seed)
+{
+    float sc = 2.;
+    float val;
+
+    for(int i = 0; i < 8; i++)
+    {
+        val += smValNoise(p * sc, seed + float(i)) / sc;
+        sc *= 2.;
+    }
+    return val;
+}
+vec4 main(vec2 fragCoord)
+{
+	//get coords and direction
+    vec2 uv=fragCoord.xy/iResolution.xy-.5;
+    uv/=1.-uv.y*1.5;
+    uv*=mat2(cos(iTime), sin(iTime), -sin(iTime), cos(iTime));
+	uv.y*=iResolution.y/iResolution.x;
+	vec3 dir=vec3(uv*zoom,(iTime*0.101));
+	float time=iTime*speed+.25;
+
+vec2 center = vec2(0.0, 0.0);
+    
+    // Calculate distance from center
+    float dist = length(uv - center) * 2.0;
+    
+    // Create noise for more natural water look
+    vec2 noiseCoord = uv * 10.0 + iTime * 2.5;
+    vec2 p = uv;
+    float t = iTime * 0.15;
+    p.x += fbm4(uv + t, 68.173);
+    p.y += fbm4(uv + t, 14.58);
+    p -= t;
+    vec3 col = vec3(fbm8(p, 5.74), fbm8(p, 8.41), fbm8(p, 2.85));
+    col += dot(col, col);
+    col *= 0.5;
+    col *= sqrt(col);
+    // Create simple radial waves from center with added noise
+    float wave = sin(dist * 3.0 - iTime * 2.0) * 0.15;
+    
+    float noise = noise(noiseCoord) * 1.02;
+    // Add noise to the wave displacement
+    wave += noise;
+
+    
+    // Direction of displacement (outward from center)
+    vec2 direction = normalize(uv - center) *10.0;
+    
+    // Apply the displacement with slight noise variation in direction
+    vec2 displaced_uv = uv + direction * wave;
+    
+    // Add a subtle secondary noise displacement
+    displaced_uv *= vec2(noise * 0.5, noise * 0.4);
+    
+    float t3 = iTime + 10.;
+    vec2 uv3 = 0.4 * (2. * fragCoord - iResolution.xy) / iResolution.y;
+    vec2 p3 = uv3;
+    float r = length(p3);
+    p3 *= (r * r) / (r * r - innerRad) - 2.6;
+    p3.y = 2.5 * p3.y;
+    float eDisc;
+    for(float i = 1.; i < 32.; i++)
+    {
+        eDisc += sqrt(i) * abs(length((10. / i) * p3 * rot(10. * t3 / sqrt(i)) * vec2(1.5, 1.)) - .5);
+    }
+    eDisc = exp(5. - eDisc * 0.15);
+    vec2 starP = floor((p + vec2(1., 3.)) * 128.) * 0.6124 + 0.6;
+    vec2 cellP = fract(p * 128.) - 0.5;
+    float stars = fract(starP.x * starP.y * fract(starP.x + starP.y));
+    stars = 10. * (max(stars, 0.9) - 0.9);
+    stars *= 1. - 2. * length(cellP);
+    float val;
+    val = mix(stars, eDisc, min(1., 2. * eDisc));
+    val *= step(0.05625, r);
+    val;
+    vec3 col3 = vec3(val);
+    
+    
+
+	vec3 from=vec3(1.,.5,0.5);
+from.xy+=  displaced_uv;
+	
+	//volumetric rendering
+	float s=0.1,fade=1.;
+	vec3 v=vec3(0.);
+	for (int r=0; r<volsteps; r++) {
+		vec3 p=from+s*dir*.5;
+		p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
+		float pa,a=pa=0.;
+		for (int i=0; i<iterations; i++) { 
+			p=abs(p)/dot(p,p)-formuparam; // the magic formula
+			a+=abs(length(p)-pa); // absolute sum of average change
+			pa=length(p);
+		}
+		float dm=max(0.,darkmatter-a*a*.001); //dark matter
+		a*=a*a; // add contrast
+		if (r>6) fade*=1.2-dm; // dark matter, don't render near
+		//v+=vec3(dm,dm*.5,0.);
+		v+=fade;
+		v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
+		fade*=distfading; // distance fading
+		s+=stepsize;
+	}
+	v=mix(vec3(length(v)),v,saturation); //color adjust
+    return vec4(v*.01+col*0.7,1.);	
+}
