@@ -56,12 +56,13 @@ type
       var KeyChar: Char; Shift: TShiftState);
     procedure SkAnimatedPaintBox1Resize(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure SkAnimatedPaintBox1DblClick(Sender: TObject);
   private
     { Private declarations }
     FShaderBuilder: ISkRuntimeShaderBuilder;
     FPaint: ISkPaint;
     FPaintCount: Int64;
-    FstopWatch: TDateTime;
+    FStopWatch: TDateTime;
     procedure RunShader;
     procedure LoadShaders;
     procedure LoadShader(const AShaderFile: string);
@@ -177,6 +178,24 @@ begin
       FShaderBuilder.SetUniform('iTime', AProgress * SkAnimatedPaintBox1.Animation.Duration);
     FPaint.Shader := FShaderBuilder.MakeShader;
     ACanvas.DrawRect(ADest, FPaint);
+
+  end;
+end;
+
+procedure TfrmShaderView.SkAnimatedPaintBox1DblClick(Sender: TObject);
+begin
+  var LBitmap := TBitmap.Create;
+  try
+    LBitmap.SetSize(floor(SkAnimatedPaintBox1.Width), floor(SkAnimatedPaintBox1.Height));
+    LBitmap.SkiaDraw(procedure(const ACanvas: ISkCanvas)
+    begin
+      ACanvas.DrawRect(TRectF.Create(0,0,LBitmap.Width,LBitmap.Height), FPaint);
+    end);
+    LBitmap.ToSkImage.EncodeToFile(
+      TPath.Combine(ShaderPath,
+        TPath.ChangeExtension(lbShaders.Selected.Text, '.png')));
+  finally
+    LBitmap.Free;
   end;
 end;
 

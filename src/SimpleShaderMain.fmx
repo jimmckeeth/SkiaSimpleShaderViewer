@@ -18,6 +18,7 @@ object frmShaderView: TfrmShaderView
     Size.Width = 708.000000000000000000
     Size.Height = 702.000000000000000000
     Size.PlatformDefault = False
+    OnDblClick = SkAnimatedPaintBox1DblClick
     OnMouseMove = SkAnimatedPaintBox1MouseMove
     OnResize = SkAnimatedPaintBox1Resize
     Animation.Duration = 100000.000000000000000000
@@ -106,6 +107,24 @@ object frmShaderView: TfrmShaderView
     Filter = 'Skia Shader Language (*.SkSL)|*.sksl|All|*.*'
     Left = 112
     Top = 72
+  end
+  object SpeedButton3: TSpeedButton
+    Anchors = [akTop, akRight]
+    Position.X = 660.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 40.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'escapetoolbutton'
+    Text = 'SpeedButton3'
+    TextSettings.Trimming = None
+    OnClick = SpeedButton3Click
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'sksl'
+    Filter = 'Skia Shader Language (*.SkSL)|*.sksl|All|*.*'
+    Left = 112
+    Top = 137
   end
   object SkSvg1: TSkSvg
     Anchors = [akRight, akBottom]
@@ -203,24 +222,6 @@ object frmShaderView: TfrmShaderView
       Opacity = 0.600000023841857900
       ShadowColor = claBlack
     end
-  end
-  object SpeedButton3: TSpeedButton
-    Anchors = [akTop, akRight]
-    Position.X = 660.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 40.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-    StyleLookup = 'escapetoolbutton'
-    Text = 'SpeedButton3'
-    TextSettings.Trimming = None
-    OnClick = SpeedButton3Click
-  end
-  object SaveDialog1: TSaveDialog
-    DefaultExt = 'sksl'
-    Filter = 'Skia Shader Language (*.SkSL)|*.sksl|All|*.*'
-    Left = 112
-    Top = 137
   end
   object MultiView1: TMultiView
     MasterButton = SpeedButton1

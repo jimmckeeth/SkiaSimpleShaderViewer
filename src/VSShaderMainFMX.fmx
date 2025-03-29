@@ -1,0 +1,73 @@
+object frmVerySimpleShaderFMX: TfrmVerySimpleShaderFMX
+  Left = 0
+  Top = 0
+  Caption = 'Very Simple FMX Shader Viewer'
+  ClientHeight = 492
+  ClientWidth = 652
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object SkAnimatedPaintBox1: TSkAnimatedPaintBox
+    Align = Client
+    Size.Width = 304.000000000000000000
+    Size.Height = 492.000000000000000000
+    Size.PlatformDefault = False
+    OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      'uniform float iTime;'
+      'uniform float2 iResolution;'
+      ''
+      '// simple plasma '
+      '// Created by Kastor in 2013-10-22'
+      '// https://www.shadertoy.com/view/ldBGRR'
+      ''
+      'vec4 main( in vec2 fragCoord )'
+      '{'
+      #9'vec2 p = -1.0 + 2.0 * fragCoord.xy / iResolution.xy;'
+      #9#9
+      
+        #9'// main code, *original shader by: '#39'Plasma'#39' by Viktor Korsun (2' +
+        '011)'
+      #9'float x = p.x;'
+      #9'float y = p.y;'
+      #9'float mov0 = x+y+cos(sin(iTime)*2.0)*100.+sin(x/100.)*1000.;'
+      #9'float mov1 = y / 0.9 +  iTime;'
+      #9'float mov2 = x / 0.2;'
+      #9'float c1 = abs(sin(mov1+iTime)/2.+mov2/2.-mov1-mov2+iTime);'
+      
+        #9'float c2 = abs(sin(c1+sin(mov0/1000.+iTime)+sin(y/40.+iTime)+si' +
+        'n((x+y)/100.)*3.));'
+      
+        #9'float c3 = abs(sin(c2+cos(mov1+mov2+c2)+cos(mov2)+sin(x/1000.))' +
+        ');'
+      #9'return vec4(c1,c2,c3,1);'#9#9
+      '}')
+    StyledSettings = [Size, Style, FontColor]
+    TextSettings.Font.Family = 'Consolas'
+    Align = MostRight
+    Position.X = 315.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 492.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    OnExit = Memo1Exit
+    Viewport.Width = 337.000000000000000000
+    Viewport.Height = 492.000000000000000000
+  end
+  object Splitter1: TSplitter
+    Align = Right
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 304.000000000000000000
+    Size.Width = 11.000000000000000000
+    Size.Height = 492.000000000000000000
+    Size.PlatformDefault = False
+    OnDblClick = Splitter1DblClick
+  end
+end

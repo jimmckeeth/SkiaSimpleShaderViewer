@@ -6,6 +6,12 @@
         <Projects Include="src\SimpleShader.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="src\VerySimpleFMXShader.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="src\VerySimpleVCLShader.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +29,32 @@
     <Target Name="SimpleShader:Make">
         <MSBuild Projects="src\SimpleShader.dproj" Targets="Make"/>
     </Target>
+    <Target Name="VerySimpleFMXShader">
+        <MSBuild Projects="src\VerySimpleFMXShader.dproj"/>
+    </Target>
+    <Target Name="VerySimpleFMXShader:Clean">
+        <MSBuild Projects="src\VerySimpleFMXShader.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VerySimpleFMXShader:Make">
+        <MSBuild Projects="src\VerySimpleFMXShader.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VerySimpleVCLShader">
+        <MSBuild Projects="src\VerySimpleVCLShader.dproj"/>
+    </Target>
+    <Target Name="VerySimpleVCLShader:Clean">
+        <MSBuild Projects="src\VerySimpleVCLShader.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VerySimpleVCLShader:Make">
+        <MSBuild Projects="src\VerySimpleVCLShader.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SimpleShader"/>
+        <CallTarget Targets="SimpleShader;VerySimpleFMXShader;VerySimpleVCLShader"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SimpleShader:Clean"/>
+        <CallTarget Targets="SimpleShader:Clean;VerySimpleFMXShader:Clean;VerySimpleVCLShader:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SimpleShader:Make"/>
+        <CallTarget Targets="SimpleShader:Make;VerySimpleFMXShader:Make;VerySimpleVCLShader:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
