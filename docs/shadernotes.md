@@ -1,6 +1,6 @@
-Textures are images, it is simple to use them. You need to download the image, then declare your uniform of type shader, like ìuniform shader iChannel0;î
+Textures are images, it is simple to use them. You need to download the image, then declare your uniform of type shader, like ‚Äúuniform shader iChannel0;‚Äù
 
-In your code you can load a the image in a SkImage and convert it do shader by calling ìYourSKImage.MakeShader(TSkSamplingOptions.High);î
+In your code you can load a the image in a SkImage and convert it do shader by calling ‚ÄúYourSKImage.MakeShader(TSkSamplingOptions.High);‚Äù
 
 Then pass it to your shader code as input, since it's a uniform (ie an input of your shader code).
 
@@ -20,17 +20,17 @@ All others uniform types (like "uniform vec2 iResolution;"), you need to inform 
 
 FRuntimeEffect.SetUniform('iResolution', [Width, Height]);
 
-ìtexture(ì is the function to read a pixel.
+‚Äútexture(‚Äú is the function to read a pixel.
 
-The "texture(iChannel0, rd).rgb;" can be replaced by ìiChannel0.eval(rd).rgb;î 
+The "texture(iChannel0, rd).rgb;" can be replaced by ‚ÄúiChannel0.eval(rd).rgb;‚Äù 
 
-but now the parameter rd is wrong because texture( function use percentage parameter (0..1, 0..1), and ìeval(ì function use the pixel coordinates parameter (0..iChannel0 width, 0..iChannel0 height)
+but now the parameter rd is wrong because texture( function use percentage parameter (0..1, 0..1), and ‚Äúeval(‚Äú function use the pixel coordinates parameter (0..iChannel0 width, 0..iChannel0 height)
 
 How can we fix the parameter value in eval function?
 
 Multiplying to the image size. So I declare a new uniform like:
 
-ìuniform float2 iImage1Resolution;î
+‚Äúuniform float2 iImage1Resolution;‚Äù
 
 And change the eval line to:
 iImage1.eval(rd.xy * iImage1Resolution.xy).rgb;
