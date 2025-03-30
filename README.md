@@ -23,7 +23,7 @@ Check out the [screenshots](screenshots/readme.md) to preview some different sha
 
 Built with [Delphi 12 Athens](https://www.embarcadero.com/products/delphi) and [Skia4Delphi](https://github.com/skia4delphi/skia4delphi)
 
-Contributors: 
+Main Contributors: 
 
 * [![Jim McKeeth](https://github.com/user-attachments/assets/a7e256b8-6a11-4f90-95d8-d3363832f053) Jim McKeeth](https://github.com/jimmckeeth)
 * [![Vinícius Felipe Botelho Barbosa](https://github.com/user-attachments/assets/9a7347f4-7255-4a48-86a7-bb10f53db4b6) Vinícius Felipe Botelho Barbosa](https://github.com/viniciusfbb)
@@ -32,6 +32,4 @@ Contributors:
 * [![Simon Booth](https://github.com/user-attachments/assets/513002de-a283-46a2-8ae2-730baa8d48e9) Simon Booth](https://github.com/peardox)
 * [![Paulo César Botelho Barbosa](https://github.com/user-attachments/assets/54c6cc7f-0408-4f44-a7e1-6df6484e76a0) Paulo César Botelho Barbosa](https://github.com/paulocesarbot)
 
-
-
-
+Thanks to everyone else who provided feedback and other contributions.
