@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 256px;
+            height: 256px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            margin-top: 8px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="2D Clouds.png" alt="2D Clouds">
+            <div class="gallery-caption">2D Clouds</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Analytic Motionblur 2D.png" alt="Analytic Motionblur 2D">
+            <div class="gallery-caption">Analytic Motionblur 2D</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Atmospheric Scattering Sample.png" alt="Atmospheric Scattering Sample">
+            <div class="gallery-caption">Atmospheric Scattering Sample</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Base warp fBM.png" alt="Base warp fBM">
+            <div class="gallery-caption">Base warp fBM</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Beautypi Eye iris.png" alt="Beautypi Eye iris">
+            <div class="gallery-caption">Beautypi Eye iris</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="CineShader Lava.png" alt="CineShader Lava">
+            <div class="gallery-caption">CineShader Lava</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="clock.png" alt="clock">
+            <div class="gallery-caption">clock</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="creation.png" alt="creation">
+            <div class="gallery-caption">creation</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="curlesque.png" alt="curlesque">
+            <div class="gallery-caption">curlesque</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Cute Little Fibonacci Sphere.png" alt="Cute Little Fibonacci Sphere">
+            <div class="gallery-caption">Cute Little Fibonacci Sphere</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Cyber Fuji 2020.png" alt="Cyber Fuji 2020">
+            <div class="gallery-caption">Cyber Fuji 2020</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="DVD Bounce.png" alt="DVD Bounce">
+            <div class="gallery-caption">DVD Bounce</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Ether.png" alt="Ether">
+            <div class="gallery-caption">Ether</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="falling snow.png" alt="falling snow">
+            <div class="gallery-caption">falling snow</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Fire Shader 301 Remix 2.png" alt="Fire Shader 301 Remix 2">
+            <div class="gallery-caption">Fire Shader 301 Remix 2</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Fire Shader 301.png" alt="Fire Shader 301">
+            <div class="gallery-caption">Fire Shader 301</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Fire Shader Red.png" alt="Fire Shader Red">
+            <div class="gallery-caption">Fire Shader Red</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Fire Shader with Image.png" alt="Fire Shader with Image">
+            <div class="gallery-caption">Fire Shader with Image</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="flame.png" alt="flame">
+            <div class="gallery-caption">flame</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="fractal pyramid.png" alt="fractal pyramid">
+            <div class="gallery-caption">fractal pyramid</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="FurSpace.png" alt="FurSpace">
+            <div class="gallery-caption">FurSpace</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Heart in rain.png" alt="Heart in rain">
+            <div class="gallery-caption">Heart in rain</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Hyperjump.png" alt="Hyperjump">
+            <div class="gallery-caption">Hyperjump</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Hyperspace Tunnel - Simplex Noise.png" alt="Hyperspace Tunnel - Simplex Noise">
+            <div class="gallery-caption">Hyperspace Tunnel - Simplex Noise</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Hyperspace Tunnel with Twirl.png" alt="Hyperspace Tunnel with Twirl">
+            <div class="gallery-caption">Hyperspace Tunnel with Twirl</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Hyperspace.png" alt="Hyperspace">
+            <div class="gallery-caption">Hyperspace</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="julia feathers.png" alt="julia feathers">
+            <div class="gallery-caption">julia feathers</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="julia.png" alt="julia">
+            <div class="gallery-caption">julia</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Jump to lightspeed.png" alt="Jump to lightspeed">
+            <div class="gallery-caption">Jump to lightspeed</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Let's self reflect.png" alt="Let's self reflect">
+            <div class="gallery-caption">Let's self reflect</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="lightspeed.png" alt="lightspeed">
+            <div class="gallery-caption">lightspeed</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="LSD 2D.png" alt="LSD 2D">
+            <div class="gallery-caption">LSD 2D</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="mandelbrot feathers.png" alt="mandelbrot feathers">
+            <div class="gallery-caption">mandelbrot feathers</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Mandelbrot Pattern Decoration.png" alt="Mandelbrot Pattern Decoration">
+            <div class="gallery-caption">Mandelbrot Pattern Decoration</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Mandelbrot.png" alt="Mandelbrot">
+            <div class="gallery-caption">Mandelbrot</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="neon plasma.png" alt="neon plasma">
+            <div class="gallery-caption">neon plasma</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Noise 3D Fly Through.png" alt="Noise 3D Fly Through">
+            <div class="gallery-caption">Noise 3D Fly Through</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="notargs.png" alt="notargs">
+            <div class="gallery-caption">notargs</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Octagrams.png" alt="Octagrams">
+            <div class="gallery-caption">Octagrams</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="old school plasma.png" alt="old school plasma">
+            <div class="gallery-caption">old school plasma</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Plasma cube.png" alt="Plasma cube">
+            <div class="gallery-caption">Plasma cube</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Plasma Globe.png" alt="Plasma Globe">
+            <div class="gallery-caption">Plasma Globe</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="plasma paint.png" alt="plasma paint">
+            <div class="gallery-caption">plasma paint</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="plasma snakes 3.png" alt="plasma snakes 3">
+            <div class="gallery-caption">plasma snakes 3</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Plasma Triangle.png" alt="Plasma Triangle">
+            <div class="gallery-caption">Plasma Triangle</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Plasma Waves.png" alt="Plasma Waves">
+            <div class="gallery-caption">Plasma Waves</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Playing marble.png" alt="Playing marble">
+            <div class="gallery-caption">Playing marble</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Protean clouds.png" alt="Protean clouds">
+            <div class="gallery-caption">Protean clouds</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Rain.png" alt="Rain">
+            <div class="gallery-caption">Rain</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="rainbowring.png" alt="rainbowring">
+            <div class="gallery-caption">rainbowring</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Raindrops on Glass.png" alt="Raindrops on Glass">
+            <div class="gallery-caption">Raindrops on Glass</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Raymarched Plasma.png" alt="Raymarched Plasma">
+            <div class="gallery-caption">Raymarched Plasma</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="RGB Light Spheres.png" alt="RGB Light Spheres">
+            <div class="gallery-caption">RGB Light Spheres</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="rings.png" alt="rings">
+            <div class="gallery-caption">rings</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="rising smoke.png" alt="rising smoke">
+            <div class="gallery-caption">rising smoke</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="seascape.png" alt="seascape">
+            <div class="gallery-caption">seascape</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Seeing Stuff.png" alt="Seeing Stuff">
+            <div class="gallery-caption">Seeing Stuff</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Simple Plasma.png" alt="Simple Plasma">
+            <div class="gallery-caption">Simple Plasma</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Simple Test Pattern.png" alt="Simple Test Pattern">
+            <div class="gallery-caption">Simple Test Pattern</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="SimpleColors.png" alt="SimpleColors">
+            <div class="gallery-caption">SimpleColors</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="simplicity.png" alt="simplicity">
+            <div class="gallery-caption">simplicity</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Sparks drifting.png" alt="Sparks drifting">
+            <div class="gallery-caption">Sparks drifting</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Star Nest 2.png" alt="Star Nest 2">
+            <div class="gallery-caption">Star Nest 2</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Star Nest.png" alt="Star Nest">
+            <div class="gallery-caption">Star Nest</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="storm.png" alt="storm">
+            <div class="gallery-caption">storm</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="voronoise.png" alt="voronoise">
+            <div class="gallery-caption">voronoise</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="Warp Speed 2.png" alt="Warp Speed 2">
+            <div class="gallery-caption">Warp Speed 2</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="water.png" alt="water">
+            <div class="gallery-caption">water</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="webbing.png" alt="webbing">
+            <div class="gallery-caption">webbing</div>
+        </div>
+        <div class="gallery-item" onclick="showImage(this)">
+            <img src="zozuar.png" alt="zozuar">
+            <div class="gallery-caption">zozuar</div>
+        </div>
+    </div>
+
+    <div class="overlay" onclick="this.style.display='none'">
+        <img src="" alt="">
+    </div>
+
+    <script>
+        function showImage(element) {
+            const overlay = document.querySelector('.overlay');
+            const overlayImg = overlay.querySelector('img');
+            const img = element.querySelector('img');
+            overlayImg.src = img.src;
+            overlayImg.alt = img.alt;
+            overlay.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

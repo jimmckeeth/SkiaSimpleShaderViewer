@@ -78,3 +78,4 @@ src/AndroidManifest.template.xml
 *.bak
 *Template*
 *.delphilsp.json
+*.zip
