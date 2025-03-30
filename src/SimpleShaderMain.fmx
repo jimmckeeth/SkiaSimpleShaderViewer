@@ -2,7 +2,7 @@ object frmShaderView: TfrmShaderView
   Left = 0
   Top = 0
   Caption = 'Simple Skia Shader Viewer (Skia4Delphi-FMX)'
-  ClientHeight = 702
+  ClientHeight = 586
   ClientWidth = 708
   Position = ScreenCenter
   FormFactor.Width = 320
@@ -16,7 +16,7 @@ object frmShaderView: TfrmShaderView
     Align = Client
     HitTest = True
     Size.Width = 708.000000000000000000
-    Size.Height = 702.000000000000000000
+    Size.Height = 586.000000000000000000
     Size.PlatformDefault = False
     OnDblClick = SkAnimatedPaintBox1DblClick
     OnMouseMove = SkAnimatedPaintBox1MouseMove
@@ -28,8 +28,8 @@ object frmShaderView: TfrmShaderView
       Anchors = [akBottom]
       Fill.Color = claWhite
       Opacity = 0.500000000000000000
-      Position.X = 203.176559448242200000
-      Position.Y = 639.000000000000000000
+      Position.X = 203.176574707031300000
+      Position.Y = 523.000000000000000000
       Size.Width = 309.000000000000000000
       Size.Height = 60.000000000000000000
       Size.PlatformDefault = False
@@ -69,7 +69,7 @@ object frmShaderView: TfrmShaderView
       Fill.Color = claWhite
       Opacity = 0.500000000000000000
       Position.X = 640.000000000000000000
-      Position.Y = 678.000000000000000000
+      Position.Y = 562.000000000000000000
       Size.Width = 65.000000000000000000
       Size.Height = 21.000000000000000000
       Size.PlatformDefault = False
@@ -129,7 +129,7 @@ object frmShaderView: TfrmShaderView
   object SkSvg1: TSkSvg
     Anchors = [akRight, akBottom]
     Position.X = 484.000000000000000000
-    Position.Y = 570.000000000000000000
+    Position.Y = 454.000000000000000000
     Size.Width = 216.000000000000000000
     Size.Height = 104.000000000000000000
     Size.PlatformDefault = False
@@ -501,11 +501,11 @@ object frmShaderView: TfrmShaderView
         '}')
       Align = Client
       Size.Width = 240.000000000000000000
-      Size.Height = 389.000000000000000000
+      Size.Height = 273.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       Viewport.Width = 220.000000000000000000
-      Viewport.Height = 369.000000000000000000
+      Viewport.Height = 253.000000000000000000
     end
     object Panel2: TPanel
       Align = Top
@@ -587,7 +587,7 @@ object frmShaderView: TfrmShaderView
       MinSize = 20.000000000000000000
       Position.X = 240.000000000000000000
       Size.Width = 10.000000000000000000
-      Size.Height = 702.000000000000000000
+      Size.Height = 586.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'splitterstyle'
       OnDblClick = Splitter1DblClick

@@ -51,5 +51,12 @@
       "Configurations" : [],
       "IsDirectory" : true,
       "IncludeSubDirectories" : true
+    }],
+  "Windows" : [{
+      "LocalName" : "..\\shaders",
+      "RemoteDir" : ".\\",
+      "Configurations" : [],
+      "IsDirectory" : true,
+      "IncludeSubDirectories" : false
     }]
 }

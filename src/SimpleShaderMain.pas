@@ -23,9 +23,6 @@ type
     Splitter1: TSplitter;
     SpeedButton3: TSpeedButton;
     lbShaders: TListBox;
-    SkSvg1: TSkSvg;
-    FloatAnimation1: TFloatAnimation;
-    ShadowEffect1: TShadowEffect;
     ckMouse: TCheckBox;
     Button3: TButton;
     Splitter2: TSplitter;
@@ -35,6 +32,9 @@ type
     LabelFPS: TSkLabel;
     AnimateKeys: TFloatAnimation;
     SaveDialog1: TSaveDialog;
+    SkSvg1: TSkSvg;
+    FloatAnimation1: TFloatAnimation;
+    ShadowEffect1: TShadowEffect;
     procedure Button1Click(Sender: TObject);
     procedure SkAnimatedPaintBox1AnimationDraw(ASender: TObject;
       const ACanvas: ISkCanvas; const ADest: TRectF;
@@ -87,24 +87,30 @@ const
 
 function ShaderPath: string;
 begin
-  {$IFDEF MSWINDOWS}
-  Result := TPath.GetFullPath('..\..\..\shaders\');
-  {$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
-  Result := TPath.GetDocumentsPath;
-  {$ELSEIF defined(MACOS)}
-  Result := TPath.GetFullPath('../Resources/');
-  {$ELSE}
-  Result := ExtractFilePath(ParamStr(0));
-  {$ENDIF}
-  if (Result <> '') and not Result.EndsWith(PathDelim) then
-    Result := Result + PathDelim;
+	{$IFDEF MSWINDOWS}
+	if TDirectory.Exists('shaders') then
+		Result := TPath.GetFullPath('shaders')
+	else
+		Result := TPath.GetFullPath('..\..\..\shaders\');
+	{$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
+	Result := TPath.GetDocumentsPath;
+	{$ELSEIF defined(MACOS)}
+	Result := TPath.GetFullPath('../Resources/');
+	{$ELSE}
+	Result := ExtractFilePath(ParamStr(0));
+	{$ENDIF}
+	if (Result <> '') and not Result.EndsWith(PathDelim) then
+		Result := Result + PathDelim;
 end;
 
 function MediaPath: string;
 begin
-  {$IFDEF MSWINDOWS}
-  Result := TPath.GetFullPath('..\..\..\media\');
-  {$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
+	{$IFDEF MSWINDOWS}
+	if TDirectory.Exists('media') then
+		Result := TPath.GetFullPath('media')
+	else
+		Result := TPath.GetFullPath('..\..\..\media\');
+	{$ELSEIF DEFINED(IOS) or DEFINED(ANDROID)}
   Result := TPath.Combine(TPath.GetDocumentsPath, 'media');
   {$ELSEIF defined(MACOS)}
   Result := TPath.Combine(TPath.GetFullPath('../Resources/'), 'media');
@@ -339,7 +345,9 @@ begin
     end));
   for var shader in Shaders do
     lbShaders.Items.Add(TPath.GetFileNameWithoutExtension(Shader));
-  RandomShader;
+  //RandomShader;
+  lbShaders.ItemIndex := 0;
+  LoadSelectedShader;
 end;
 
 procedure TfrmShaderView.RandomShader;
