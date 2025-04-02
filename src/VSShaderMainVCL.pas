@@ -39,7 +39,8 @@ uses
 
 procedure TfrmVerySimpleShaderVCL.FormCreate(Sender: TObject);
 begin
-  SkAnimatedPaintBox1.Animation.Duration := MaxSingle;
+	SkAnimatedPaintBox1.BackendRender := TSkControlRenderBackend.HardwareAcceleration;
+	SkAnimatedPaintBox1.Animation.Duration := MaxSingle;
   RunShader;
 end;
 

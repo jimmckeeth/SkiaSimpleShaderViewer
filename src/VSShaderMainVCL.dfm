@@ -79,7 +79,6 @@ object frmVerySimpleShaderVCL: TfrmVerySimpleShaderVCL
     WordWrap = False
     OnDblClick = Memo1Exit
     OnExit = Memo1Exit
-    ExplicitLeft = 550
   end
   object SkAnimatedPaintBox1: TSkAnimatedPaintBox
     Left = 0
@@ -91,10 +90,7 @@ object frmVerySimpleShaderVCL: TfrmVerySimpleShaderVCL
     Margins.Right = 5
     Margins.Bottom = 5
     Align = alClient
+    BackendRender = HardwareAcceleration
     OnAnimationDraw = SkAnimatedPaintBox1AnimationDraw
-    ExplicitLeft = 444
-    ExplicitTop = 324
-    ExplicitWidth = 75
-    ExplicitHeight = 75
   end
 end
