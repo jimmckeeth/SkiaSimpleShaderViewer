@@ -1,4 +1,4 @@
-﻿uniform float iTime;
+uniform float iTime;
 uniform float2 iResolution;
 uniform float4 iMouse;
 
