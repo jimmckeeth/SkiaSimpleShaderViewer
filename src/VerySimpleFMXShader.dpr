@@ -6,7 +6,7 @@ uses
   FMX.Skia,
   VSShaderMainFMX in 'VSShaderMainFMX.pas' {frmVerySimpleShaderFMX};
 
-{$R *.res}
+{$R 'VerySimpleFMXShader.res' 'VerySimpleFMXShader.rc'}
 
 begin
   GlobalUseSkia := True;

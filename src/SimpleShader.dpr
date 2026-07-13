@@ -1,4 +1,6 @@
-program SimpleShader;
+﻿program SimpleShader;
+
+
 
 
 
@@ -9,7 +11,7 @@ uses
   FMX.Types,
   SimpleShaderMain in 'SimpleShaderMain.pas' {frmShaderView};
 
-{$R *.res}
+{$R 'SimpleShader.res' 'SimpleShader.rc'}
 
 begin
   GlobalUseSkia := True;

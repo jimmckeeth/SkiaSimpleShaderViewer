@@ -4,7 +4,7 @@ uses
   Vcl.Forms,
   VSShaderMainVCL in 'VSShaderMainVCL.pas' {frmVerySimpleShaderVCL};
 
-{$R *.res}
+{$R 'VerySimpleVCLShader.res' 'VerySimpleVCLShader.rc'}
 
 begin
   Application.Initialize;
