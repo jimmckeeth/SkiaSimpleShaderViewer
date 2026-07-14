@@ -100,7 +100,6 @@ object frmShaderView: TfrmShaderView
     Size.PlatformDefault = False
     StyleLookup = 'detailstoolbuttonbordered'
     Text = 'SpeedButton1'
-    TextSettings.Trimming = None
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'sksl'
@@ -117,7 +116,6 @@ object frmShaderView: TfrmShaderView
     Size.PlatformDefault = False
     StyleLookup = 'escapetoolbutton'
     Text = 'SpeedButton3'
-    TextSettings.Trimming = None
     OnClick = SpeedButton3Click
   end
   object SaveDialog1: TSaveDialog
@@ -243,7 +241,7 @@ object frmShaderView: TfrmShaderView
         '// Description : Array and textureless GLSL 2D/3D/4D simplex '
         '//        noise functions.'
         '//   Author : Ian McEwan, Ashima Arts.'
-        '// Maintainer : ijm'
+        '//  Maintainer : ijm'
         '//   Lastmod : 20110822 (ijm)'
         
           '//   License : Copyright (C) 2011 Ashima Arts. All rights reserv' +
@@ -523,7 +521,6 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'playtoolbutton'
         TabOrder = 0
         Text = 'Run'
-        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button1Click
@@ -538,7 +535,6 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'pagecurltoolbutton'
         TabOrder = 1
         Text = 'Load'
-        TextSettings.Trimming = None
         ParentShowHint = False
         ShowHint = True
         OnClick = Button2Click
@@ -551,7 +547,6 @@ object frmShaderView: TfrmShaderView
         Size.PlatformDefault = False
         StyleLookup = 'detailstoolbuttonbordered'
         Text = 'SpeedButton1'
-        TextSettings.Trimming = None
         OnClick = SpeedButton2Click
       end
       object ckMouse: TCheckBox
@@ -577,7 +572,6 @@ object frmShaderView: TfrmShaderView
         StyleLookup = 'organizetoolbutton'
         TabOrder = 3
         Text = 'Button3'
-        TextSettings.Trimming = None
         OnClick = Button3Click
       end
     end
