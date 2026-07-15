@@ -1,4 +1,4 @@
-unit SimpleShaderMain;
+﻿unit SimpleShaderMain;
 
 interface
 
@@ -190,6 +190,11 @@ end;
 
 procedure TfrmShaderView.SkAnimatedPaintBox1DblClick(Sender: TObject);
 begin
+  if not Assigned(FPaint) then
+    Exit;
+
+  var LShaderName := if Assigned(lbShaders.Selected) and (lbShaders.Selected.Text <> '') then lbShaders.Selected.Text else 'shader-export';
+
   var LBitmap := TBitmap.Create;
   try
     LBitmap.SetSize(floor(SkAnimatedPaintBox1.Width), floor(SkAnimatedPaintBox1.Height));
@@ -199,7 +204,7 @@ begin
     end);
     LBitmap.ToSkImage.EncodeToFile(
       TPath.Combine(ShaderPath,
-        TPath.ChangeExtension(lbShaders.Selected.Text, '.png')));
+        TPath.ChangeExtension(LShaderName, '.png')));
   finally
     LBitmap.Free;
   end;
@@ -208,7 +213,7 @@ end;
 procedure TfrmShaderView.SkAnimatedPaintBox1MouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Single);
 begin
-  if ckMouse.IsChecked and FShaderBuilder.Effect.UniformExists('iMouse') and Assigned(FShaderBuilder) then
+  if ckMouse.IsChecked and Assigned(FShaderBuilder) and FShaderBuilder.Effect.UniformExists('iMouse') then
     FShaderBuilder.SetUniform('iMouse', [X, Y, 0, Math.IfThen(ssLeft in Shift, 1, 0)]);
 end;
 
@@ -224,6 +229,9 @@ end;
 
 procedure TfrmShaderView.LoadSelectedShader;
 begin
+  if (lbShaders.Count = 0) or (lbShaders.ItemIndex < 0) or (lbShaders.ItemIndex >= lbShaders.Count) then
+    Exit;
+
   LoadShader(TPath.Combine(ShaderPath,lbShaders.Items[lbShaders.ItemIndex]+ShaderExt));
 end;
 
@@ -264,20 +272,26 @@ procedure TfrmShaderView.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if key = vkLeft then
   begin
-    if lbShaders.ItemIndex > 0 then
-      lbShaders.ItemIndex := Pred(lbShaders.ItemIndex)
-    else
-      lbShaders.ItemIndex := Pred(lbShaders.Items.Count);
-    LoadSelectedShader;
+    if lbShaders.Count > 0 then
+    begin
+      if lbShaders.ItemIndex > 0 then
+        lbShaders.ItemIndex := Pred(lbShaders.ItemIndex)
+      else
+        lbShaders.ItemIndex := Pred(lbShaders.Items.Count);
+      LoadSelectedShader;
+    end;
     key := 0;
   end;
   if key = vkRight then
   begin
-    if lbShaders.ItemIndex < Pred(lbShaders.Items.Count) then
-      lbShaders.ItemIndex := Succ(lbShaders.ItemIndex)
-    else
-      lbShaders.ItemIndex := 0;
-    LoadSelectedShader;
+    if lbShaders.Count > 0 then
+    begin
+      if lbShaders.ItemIndex < Pred(lbShaders.Items.Count) then
+        lbShaders.ItemIndex := Succ(lbShaders.ItemIndex)
+      else
+        lbShaders.ItemIndex := 0;
+      LoadSelectedShader;
+    end;
     key := 0;
   end;
   if keyChar = #32 then
@@ -318,7 +332,8 @@ begin
     FstopWatch := now;
   end;
   inc(FPaintCount);
-  var LFps := FPaintCount / ((now - FstopWatch) * (1 / OneSecond));
+  var LElapsedSeconds := (Now - FStopWatch) * (1 / OneSecond);
+  var LFps := if LElapsedSeconds > 0 then (FPaintCount / LElapsedSeconds) else 0.0;
   LabelFPS.Text := Format('%3.1f fps', [LFps]);
 end;
 
@@ -345,9 +360,12 @@ begin
     end));
   for var shader in Shaders do
     lbShaders.Items.Add(TPath.GetFileNameWithoutExtension(Shader));
-  //RandomShader;
-  lbShaders.ItemIndex := 0;
-  LoadSelectedShader;
+
+  if lbShaders.Count > 0 then
+  begin
+    lbShaders.ItemIndex := 0;
+    LoadSelectedShader;
+  end;
 end;
 
 procedure TfrmShaderView.RandomShader;
